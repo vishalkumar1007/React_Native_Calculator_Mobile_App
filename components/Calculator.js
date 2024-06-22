@@ -2,27 +2,161 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { SafeAreaView, View, Text, StyleSheet, TextInput, Alert, TouchableOpacity, ScrollView } from 'react-native';
 import { Vibration } from 'react-native';
-import Svg, { Path, Line,Circle } from 'react-native-svg';
+import Svg, { Path, Line, Circle } from 'react-native-svg';
 
 
 function Calculator() {
     const scrollViewRef = useRef();
     const [inputLog, setInputLog] = useState('');
-    const [finalOutput,setFinalOutput] = useState(0)
+    const [finalOutput, setFinalOutput] = useState(0);
+    const [lastInt, setLastInt] = useState('');
+
+    // const calculate = ()=>{
+    //     inputLog.forEach(n => {
+    //         let evaluate = null;
+    //         if(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'].includes(n)){
+    //             let intValue = Number(n);
+    //             let strValue = intValue.toString();
+
+    //             if(strValue.length!==0){
+
+    //             }
+    //         }
+    //         switch (n) {
+    //             case '+':
+    //                 evaluate++;
+    //                 break;
+    //             case '-':
+    //                 evaluate--;
+    //                 break;
+    //             case '/':
+    //                 evaluate/=evaluate;
+    //                 break;
+    //             case '*':
+    //                 evaluate*=evaluate;
+    //                 break;
+    //             case '%':
+    //                 evaluate%=evaluate;
+    //                 break;     
+    //         }
+    //     });
+    // }
+
+    const findDuplicate = (str) => {
+        // console.log(str);
+        let cnt = 0;
+        for (const element of str) {
+            if (cnt === 1) {
+                return false;
+            } else if (element === '.') {
+                cnt++;
+            }
+        }
+        return true;
+    }
+
+    // const 
+
+    useEffect(() => {
+        console.log('input Log', inputLog);
+        console.log('lastInt', lastInt);
+
+    }, [inputLog])
 
     const HandelOnPress = (value) => {
         Vibration.vibrate(10);
-        let input = inputLog;
-        input += value;
-        setInputLog(input);
+        switch (value) {
+            case '.':
+                if (findDuplicate(lastInt)) {
+                    if (['%', '+', '-', '÷', 'x', '.'].includes(value)) {
+                        const pvrVal = inputLog.length > 0 ? inputLog[inputLog.length - 1] : null;
+                        if (['%', '+', '-', '÷', 'x', '.'].includes(pvrVal)) {
+                            setInputLog(inputLog.substr(0, inputLog.length - 1) + value)
+                        } else {
+                            let input = inputLog;
+                            input += value;
+                            setInputLog(input);
+                        }
+    
+                    } else {
+    
+                        let input = inputLog;
+                        input += value;
+                        setInputLog(input);
+                    }
+    
+                    // ...............................
+    
+    
+                    if (['%', '+', '-', '÷', 'x'].includes(value)) {
+                        setLastInt('');
+                    } else if (value === '.') {
+                        const isPvrDot = lastInt.length > 0 ? lastInt[lastInt.length - 1] : null;
+                        if (isPvrDot === '.') {
+                            setLastInt(lastInt.substr(0, lastInt.length - 1) + value);
+                        } else {
+                            let onlyInt = lastInt;
+                            onlyInt += value;
+                            setLastInt(onlyInt);
+                        }
+                    } else {
+                        let onlyInt = lastInt;
+                        onlyInt += value;
+                        setLastInt(onlyInt);
+                    }
+                }
+                break;
+
+            default:
+                if (['%', '+', '-', '÷', 'x', '.'].includes(value)) {
+                    const pvrVal = inputLog.length > 0 ? inputLog[inputLog.length - 1] : null;
+                    if (['%', '+', '-', '÷', 'x', '.'].includes(pvrVal)) {
+                        setInputLog(inputLog.substr(0, inputLog.length - 1) + value)
+                    } else {
+                        let input = inputLog;
+                        input += value;
+                        setInputLog(input);
+                    }
+
+                } else {
+
+                    let input = inputLog;
+                    input += value;
+                    setInputLog(input);
+                }
+
+                // ...............................
+
+
+                if (['%', '+', '-', '÷', 'x'].includes(value)) {
+                    setLastInt('');
+                } else if (value === '.') {
+                    const isPvrDot = lastInt.length > 0 ? lastInt[lastInt.length - 1] : null;
+                    if (isPvrDot === '.') {
+                        setLastInt(lastInt.substr(0, lastInt.length - 1) + value);
+                    } else {
+                        let onlyInt = lastInt;
+                        onlyInt += value;
+                        setLastInt(onlyInt);
+                    }
+                } else {
+                    let onlyInt = lastInt;
+                    onlyInt += value;
+                    setLastInt(onlyInt);
+                }
+
+                break;
+        }
     }
 
     const DeleteLog = (val) => {
         Vibration.vibrate(10);
-        if(val==='AC'){
+        if (val === 'AC') {
             setInputLog('');
-        }else if(val==='X'){
-            setInputLog(inputLog.substr(0,inputLog.length-1))
+            setLastInt('');
+        } else if (val === 'X') {
+            setInputLog(inputLog.substr(0, inputLog.length - 1))
+            setLastInt(lastInt.substr(0, lastInt.length - 1))
         }
     }
 
@@ -31,6 +165,7 @@ function Calculator() {
             scrollViewRef.current.scrollToEnd({ animated: true });
         }
     }, [inputLog]);
+
 
 
     return (
@@ -50,7 +185,7 @@ function Calculator() {
             </View>
             <View style={styles.input_view}>
                 <View style={styles.main_btn_view}>
-{/* ........................... */}
+                    {/* ........................... */}
                     <View style={styles.main_btn_view_arrange}>
                         <TouchableOpacity style={styles.cal_btn} onPress={() => { DeleteLog('AC') }}>
                             <Text style={[styles.cal_btn_text, styles.text_black]}  >AC</Text>
@@ -78,20 +213,20 @@ function Calculator() {
 
                         <TouchableOpacity style={styles.cal_btn} onPress={() => { HandelOnPress('%') }}>
                             <View style={[styles.cal_btn_text, styles.text_black]}>
-                            <Svg
-                                    xmlns="http://www.w3.org/2000/svg" 
-                                    width="33" 
-                                    height="33" 
+                                <Svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="33"
+                                    height="33"
                                     viewBox="0 -1 24 24"
-                                    fill="none" 
-                                    stroke="#2a2a2a" 
-                                    strokeWidth="1.8" 
-                                    stroke-linecap="round" 
+                                    fill="none"
+                                    stroke="#2a2a2a"
+                                    strokeWidth="1.8"
+                                    stroke-linecap="round"
                                     stroke-linejoin="round"
                                 >
-                                    <Line x1="19" x2="5" y1="5" y2="19"/>
-                                    <Circle cx="7" cy="7" r="2.6"/>
-                                    <Circle cx="17" cy="17" r="2.5"/>
+                                    <Line x1="19" x2="5" y1="5" y2="19" />
+                                    <Circle cx="7" cy="7" r="2.6" />
+                                    <Circle cx="17" cy="17" r="2.5" />
                                 </Svg>
                             </View>
                         </TouchableOpacity>
@@ -100,8 +235,8 @@ function Calculator() {
                             <Text style={styles.cal_btn_text} >÷</Text>
                         </TouchableOpacity>
                     </View>
-                    
-{/* ........................................... */}
+
+                    {/* ........................................... */}
                     <View style={styles.main_btn_view_arrange}>
                         <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_number]} onPress={() => { HandelOnPress('7') }}>
                             <Text style={styles.cal_btn_text} >7</Text>
@@ -119,8 +254,8 @@ function Calculator() {
                             <Text style={styles.cal_btn_text} >×</Text>
                         </TouchableOpacity>
                     </View>
-                    
-{/* .................................................. */}
+
+                    {/* .................................................. */}
                     <View style={styles.main_btn_view_arrange}>
                         <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_number]} onPress={() => { HandelOnPress('4') }}>
                             <Text style={styles.cal_btn_text} >4</Text>
@@ -152,8 +287,8 @@ function Calculator() {
                             </View>
                         </TouchableOpacity>
                     </View>
-                    
-{/* ........................................................ */}
+
+                    {/* ........................................................ */}
                     <View style={styles.main_btn_view_arrange}>
                         <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_number]} onPress={() => { HandelOnPress('1') }}>
                             <Text style={styles.cal_btn_text} >1</Text>
@@ -171,8 +306,8 @@ function Calculator() {
                             <Text style={styles.cal_btn_text}>+</Text>
                         </TouchableOpacity>
                     </View>
-                    
-{/* ................................................................ */}
+
+                    {/* ................................................................ */}
                     <View style={styles.main_btn_view_arrange}>
                         <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_number, styles.take_two_width]} onPress={() => { HandelOnPress('0') }}>
                             <Text style={styles.cal_btn_text}>0</Text>
@@ -197,9 +332,9 @@ const styles = StyleSheet.create({
         width: '88%',
         height: '95%',
         display: 'flex',
-        justifyContent:'space-between',
-        alignSelf:'center',
-        
+        justifyContent: 'space-between',
+        alignSelf: 'center',
+
     },
     output_view: {
         width: '100%',
@@ -217,13 +352,13 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         justifyContent: 'space-between',
-        rowGap:1,
+        rowGap: 1,
     },
-    main_btn_view_arrange:{
-        width:'100%',
-        height:'18%',
-        display:'flex',
-        flexDirection:'row',
+    main_btn_view_arrange: {
+        width: '100%',
+        height: '18%',
+        display: 'flex',
+        flexDirection: 'row',
         justifyContent: 'space-between',
     },
     cal_btn: {
@@ -256,7 +391,7 @@ const styles = StyleSheet.create({
     },
     final_output_container: {
         height: '85%',
-        width:'100%',
+        width: '100%',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'flex-end',
@@ -268,7 +403,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'flex-end',
         paddingRight: 10,
-        overflow:'scroll',
+        overflow: 'scroll',
     },
     final_output: {
         flexGrow: 1,
