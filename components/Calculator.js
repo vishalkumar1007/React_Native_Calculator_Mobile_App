@@ -194,7 +194,6 @@ function Calculator() {
 
 const styles = StyleSheet.create({
     calculator_main: {
-        // backgroundColor:'red',
         width: '88%',
         height: '95%',
         display: 'flex',
@@ -203,31 +202,24 @@ const styles = StyleSheet.create({
         
     },
     output_view: {
-        // backgroundColor:'green',
         width: '100%',
         height: '47%'
     },
     input_view: {
-        // backgroundColor:'pink',
         width: '100%',
         height: '52%',
 
     },
     main_btn_view: {
-        // backgroundColor:'purple',
-        // backgroundColor:'blue',
         display: 'flex',
         flexDirection: 'column',
         flexWrap: 'wrap',
         width: '100%',
         height: '100%',
         justifyContent: 'space-between',
-        // flexDirection:'column'
         rowGap:1,
-        // rowGap: 20,
     },
     main_btn_view_arrange:{
-        // backgroundColor:'pink',
         width:'100%',
         height:'18%',
         display:'flex',
@@ -249,7 +241,6 @@ const styles = StyleSheet.create({
     },
     cal_btn_text: {
         fontSize: 30,
-        // fontWeight: '500',
         color: 'white'
     },
     cal_btn_operation: {
@@ -264,7 +255,6 @@ const styles = StyleSheet.create({
         color: '#2a2a2a',
     },
     final_output_container: {
-        // backgroundColor:'blue',
         height: '85%',
         width:'100%',
         display: 'flex',
@@ -272,7 +262,6 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
     },
     input_record: {
-        // backgroundColor:'gray',
         width: '100%',
         height: '15%',
         display: 'flex',
@@ -290,7 +279,6 @@ const styles = StyleSheet.create({
 
     },
     final_output_text: {
-        // backgroundColor:'black',
         fontSize: 45,
         color: 'white',
         textAlign: 'left'
@@ -300,6 +288,4 @@ const styles = StyleSheet.create({
         color: '#eeeeee',
     }
 })
-
-
 export default Calculator;
