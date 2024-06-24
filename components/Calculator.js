@@ -1,151 +1,56 @@
-
 import React, { useEffect, useState, useRef } from 'react';
 import { SafeAreaView, View, Text, StyleSheet, TextInput, Alert, TouchableOpacity, ScrollView } from 'react-native';
 import { Vibration } from 'react-native';
 import Svg, { Path, Line, Circle } from 'react-native-svg';
 
-
 function Calculator() {
     const scrollViewRef = useRef();
     const [inputLog, setInputLog] = useState('');
-    const [finalOutput, setFinalOutput] = useState(0);
-    const [lastInt, setLastInt] = useState('');
+    const [finalOutput, setFinalOutput] = useState(0)
 
-    // const calculate = ()=>{
-    //     inputLog.forEach(n => {
-    //         let evaluate = null;
-    //         if(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'].includes(n)){
-    //             let intValue = Number(n);
-    //             let strValue = intValue.toString();
 
-    //             if(strValue.length!==0){
-
-    //             }
-    //         }
-    //         switch (n) {
-    //             case '+':
-    //                 evaluate++;
-    //                 break;
-    //             case '-':
-    //                 evaluate--;
-    //                 break;
-    //             case '/':
-    //                 evaluate/=evaluate;
-    //                 break;
-    //             case '*':
-    //                 evaluate*=evaluate;
-    //                 break;
-    //             case '%':
-    //                 evaluate%=evaluate;
-    //                 break;     
-    //         }
-    //     });
-    // }
-
-    const findDuplicate = (str) => {
-        // console.log(str);
-        let cnt = 0;
-        for (const element of str) {
-            if (cnt === 1) {
+    const HandelMultipleDot = (str) => {
+        let dotCnt = 0;
+        for(let i=str.length-1; i>=0; i--){
+            if(dotCnt>=1){
                 return false;
-            } else if (element === '.') {
-                cnt++;
+            }
+            else if(str[i]==='.'){
+                dotCnt++;
             }
         }
         return true;
     }
 
-    // const 
 
-    useEffect(() => {
-        console.log('input Log', inputLog);
-        console.log('lastInt', lastInt);
+    const HandelCommonInput = (value) =>{
+        
+        if (['%', '+', '-', '÷', 'x', '.'].includes(value)) {
+            const pvrVal = inputLog.length > 0 ? inputLog[inputLog.length - 1] : null;
+            if (['%', '+', '-', '÷', 'x', '.'].includes(pvrVal)) {
+                setInputLog(inputLog.substr(0, inputLog.length - 1) + value)
+            } else {
+                let input = inputLog;
+                input += value;
+                setInputLog(input);
+            }
 
-    }, [inputLog])
+        }else{
+
+            let input = inputLog;
+            input += value;
+            setInputLog(input);
+        }
+    }
 
     const HandelOnPress = (value) => {
         Vibration.vibrate(10);
-        switch (value) {
-            case '.':
-                if (findDuplicate(lastInt)) {
-                    if (['%', '+', '-', '÷', 'x', '.'].includes(value)) {
-                        const pvrVal = inputLog.length > 0 ? inputLog[inputLog.length - 1] : null;
-                        if (['%', '+', '-', '÷', 'x', '.'].includes(pvrVal)) {
-                            setInputLog(inputLog.substr(0, inputLog.length - 1) + value)
-                        } else {
-                            let input = inputLog;
-                            input += value;
-                            setInputLog(input);
-                        }
-    
-                    } else {
-    
-                        let input = inputLog;
-                        input += value;
-                        setInputLog(input);
-                    }
-    
-                    // ...............................
-    
-    
-                    if (['%', '+', '-', '÷', 'x'].includes(value)) {
-                        setLastInt('');
-                    } else if (value === '.') {
-                        const isPvrDot = lastInt.length > 0 ? lastInt[lastInt.length - 1] : null;
-                        if (isPvrDot === '.') {
-                            setLastInt(lastInt.substr(0, lastInt.length - 1) + value);
-                        } else {
-                            let onlyInt = lastInt;
-                            onlyInt += value;
-                            setLastInt(onlyInt);
-                        }
-                    } else {
-                        let onlyInt = lastInt;
-                        onlyInt += value;
-                        setLastInt(onlyInt);
-                    }
-                }
-                break;
-
-            default:
-                if (['%', '+', '-', '÷', 'x', '.'].includes(value)) {
-                    const pvrVal = inputLog.length > 0 ? inputLog[inputLog.length - 1] : null;
-                    if (['%', '+', '-', '÷', 'x', '.'].includes(pvrVal)) {
-                        setInputLog(inputLog.substr(0, inputLog.length - 1) + value)
-                    } else {
-                        let input = inputLog;
-                        input += value;
-                        setInputLog(input);
-                    }
-
-                } else {
-
-                    let input = inputLog;
-                    input += value;
-                    setInputLog(input);
-                }
-
-                // ...............................
-
-
-                if (['%', '+', '-', '÷', 'x'].includes(value)) {
-                    setLastInt('');
-                } else if (value === '.') {
-                    const isPvrDot = lastInt.length > 0 ? lastInt[lastInt.length - 1] : null;
-                    if (isPvrDot === '.') {
-                        setLastInt(lastInt.substr(0, lastInt.length - 1) + value);
-                    } else {
-                        let onlyInt = lastInt;
-                        onlyInt += value;
-                        setLastInt(onlyInt);
-                    }
-                } else {
-                    let onlyInt = lastInt;
-                    onlyInt += value;
-                    setLastInt(onlyInt);
-                }
-
-                break;
+        if (value === '.') {
+            if (HandelMultipleDot(inputLog)) {
+                HandelCommonInput(value);
+            }
+        } else {
+            HandelCommonInput(value);
         }
     }
 
@@ -153,10 +58,8 @@ function Calculator() {
         Vibration.vibrate(10);
         if (val === 'AC') {
             setInputLog('');
-            setLastInt('');
         } else if (val === 'X') {
             setInputLog(inputLog.substr(0, inputLog.length - 1))
-            setLastInt(lastInt.substr(0, lastInt.length - 1))
         }
     }
 
@@ -171,15 +74,15 @@ function Calculator() {
     return (
         <SafeAreaView style={styles.calculator_main}>
             <View style={styles.output_view}>
-                <View style={styles.final_output_container}>
+                <View style={styles.input_record}>
                     <ScrollView
-                        contentContainerStyle={styles.final_output}
+                        contentContainerStyle={styles.input_final_record}
                         ref={scrollViewRef}
                     >
                         <Text style={styles.final_output_text}>{inputLog}</Text>
                     </ScrollView>
                 </View>
-                <View style={styles.input_record}>
+                <View style={styles.final_output_container}>
                     <Text style={styles.input_record_text}>{finalOutput}</Text>
                 </View>
             </View>
@@ -198,10 +101,10 @@ function Calculator() {
                                     xmlns="http://www.w3.org/2000/svg"
                                     width={42}
                                     height={42}
-                                    viewBox="1 -1 24 24"
+                                    viewBox="1 0 24 24"
                                     fill="none"
-                                    stroke="#2a2a2a"
-                                    strokeWidth="1.4"
+                                    stroke="#2c2c2c"
+                                    strokeWidth="1.8"
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
                                 >
@@ -212,7 +115,7 @@ function Calculator() {
                         </TouchableOpacity>
 
                         <TouchableOpacity style={styles.cal_btn} onPress={() => { HandelOnPress('%') }}>
-                            <View style={[styles.cal_btn_text, styles.text_black]}>
+                            <View style={[styles.cal_btn_text, styles.text_black]} >
                                 <Svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="33"
@@ -220,7 +123,7 @@ function Calculator() {
                                     viewBox="0 -1 24 24"
                                     fill="none"
                                     stroke="#2a2a2a"
-                                    strokeWidth="1.8"
+                                    strokeWidth="2.4"
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
                                 >
@@ -278,7 +181,7 @@ function Calculator() {
                                     viewBox="2 1 20 20"
                                     fill="none"
                                     stroke="white"
-                                    strokeWidth={2.5}
+                                    strokeWidth={2}
                                     strokeLinecap="round"
                                     strokeLinejoin="round"
                                 >
@@ -330,17 +233,14 @@ function Calculator() {
 const styles = StyleSheet.create({
     calculator_main: {
         width: '88%',
-        height: '95%',
+        height: '97%',
         display: 'flex',
         justifyContent: 'space-between',
         alignSelf: 'center',
 
     },
-    output_view: {
-        width: '100%',
-        height: '47%'
-    },
     input_view: {
+        // backgroundColor:'pink',
         width: '100%',
         height: '52%',
 
@@ -364,8 +264,8 @@ const styles = StyleSheet.create({
     cal_btn: {
         width: '23%',
         height: '100%',
-        backgroundColor: '#a5a5a5',
-        borderRadius: 10,
+        backgroundColor: '#939393',
+        borderRadius: 20,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -379,44 +279,52 @@ const styles = StyleSheet.create({
         color: 'white'
     },
     cal_btn_operation: {
-        backgroundColor: '#ff9f0a',
+        backgroundColor: '#f59500',
         color: 'white',
     },
     cal_btn_number: {
-        backgroundColor: '#333333',
+        backgroundColor: '#222222',
         color: 'white',
     },
     text_black: {
         color: '#2a2a2a',
+        fontWeight:500
+    },
+
+    // ...................
+
+    output_view: {
+        // backgroundColor:'gray',
+        width: '100%',
+        height: '47%'
     },
     final_output_container: {
-        height: '85%',
+        // backgroundColor:'blue',
         width: '100%',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'flex-end',
-    },
-    input_record: {
-        width: '100%',
-        height: '15%',
+        height: '13%',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'flex-end',
         paddingRight: 10,
         overflow: 'scroll',
     },
-    final_output: {
-        flexGrow: 1,
-        justifyContent: 'flex-end',
+    input_record: {
+        height: '87%',
+        width: '100%',
+        justifyContent: 'center',
         alignItems: 'flex-end',
+    },
+    input_final_record: {
+        width: '100%',
         paddingRight: 10,
-
-
+        justifyContent: 'flex-end',
+        flexGrow: 1,
     },
     final_output_text: {
         fontSize: 45,
         color: 'white',
-        textAlign: 'left'
+        textAlign: 'right',
+        writingDirection: 'rtl',
     },
     input_record_text: {
         fontSize: 30,
