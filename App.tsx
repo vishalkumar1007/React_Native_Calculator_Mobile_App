@@ -5,6 +5,7 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import Calculator from './components/Calculator';
+import Converter from './components/Converter';
 import { useState } from 'react';
 
 const styles = StyleSheet.create({
@@ -64,7 +65,7 @@ function App(): React.JSX.Element {
       </View>
       <View style={styles.output}>
         {
-          activeElement==='cal'?<Calculator />:<View/>
+          activeElement==='cal'?<Calculator />:<Converter/>
         }
       </View>
     </View>

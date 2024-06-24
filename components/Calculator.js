@@ -25,9 +25,9 @@ function Calculator() {
 
     const HandelCommonInput = (value) =>{
         
-        if (['%', '+', '-', '÷', 'x', '.'].includes(value)) {
+        if (['﹪', '+', '-', '÷', '×', '.'].includes(value)) {
             const pvrVal = inputLog.length > 0 ? inputLog[inputLog.length - 1] : null;
-            if (['%', '+', '-', '÷', 'x', '.'].includes(pvrVal)) {
+            if (['﹪', '+', '-', '÷', '×', '.'].includes(pvrVal)) {
                 setInputLog(inputLog.substr(0, inputLog.length - 1) + value)
             } else {
                 let input = inputLog;
@@ -49,7 +49,9 @@ function Calculator() {
             if (HandelMultipleDot(inputLog)) {
                 HandelCommonInput(value);
             }
-        } else {
+        }else if(['﹪', '+', '-', '÷', '×', '.'].includes(value) && inputLog.length===0) {
+            setInputLog(`0${value}`);
+        }else{
             HandelCommonInput(value);
         }
     }
@@ -114,12 +116,12 @@ function Calculator() {
                             </View>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.cal_btn} onPress={() => { HandelOnPress('%') }}>
+                        <TouchableOpacity style={styles.cal_btn} onPress={() => { HandelOnPress('﹪') }}>
                             <View style={[styles.cal_btn_text, styles.text_black]} >
                                 <Svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    width="33"
-                                    height="33"
+                                    width="35.5"
+                                    height="35.5"
                                     viewBox="0 -1 24 24"
                                     fill="none"
                                     stroke="#2a2a2a"
@@ -153,8 +155,8 @@ function Calculator() {
                             <Text style={styles.cal_btn_text}>9</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_operation]} onPress={() => { HandelOnPress('x') }}>
-                            <Text style={styles.cal_btn_text} >×</Text>
+                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_operation]} onPress={() => { HandelOnPress('×') }}>
+                            <Text style={styles.cal_btn_text} > × </Text>
                         </TouchableOpacity>
                     </View>
 
