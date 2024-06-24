@@ -1,6 +1,3 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable react-native/no-inline-styles */
-
 
 import React, { useEffect } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
@@ -18,7 +15,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#000000',
   },
   option: {
-    // backgroundColor: 'red',
     width: '100%',
     height: '4%',
     display: 'flex',
@@ -33,7 +29,6 @@ const styles = StyleSheet.create({
     color:'gray'
   },
   output: {
-    // backgroundColor:'yellow',
     width: '100%',
     height: '96%'
   },

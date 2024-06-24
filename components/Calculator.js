@@ -6,16 +6,66 @@ import Svg, { Path, Line, Circle } from 'react-native-svg';
 function Calculator() {
     const scrollViewRef = useRef();
     const [inputLog, setInputLog] = useState('');
-    const [finalOutput, setFinalOutput] = useState(0)
+    const [finalOutput, setFinalOutput] = useState(0);
+    const [preFinalOutput, setPreFinalOutput] = useState('');
 
+    const CalculationLogic = () => {
+        if (['÷'].some(operator => preFinalOutput.includes(operator)) && preFinalOutput[preFinalOutput.length - 1] !== '÷') {
+            let lastValue = '';
+            let divideIndex = -1;
+            for (let i = 0; i < preFinalOutput.length; i++) {
+                if (['﹪', '+', '-', '×'].includes(preFinalOutput[i])) {
+                    lastValue = '';
+                } else if ('÷' === preFinalOutput[i]) {
+                    divideIndex = i;
+                    break;
+                } else {
+                    lastValue += preFinalOutput[i];
+                }
+            }
+            let nextValue = '';
+            for (let k = divideIndex + 1; k < preFinalOutput.length; k++) {
+                if (['﹪', '+', '-', '×'].includes(preFinalOutput[k])) {
+                    break;
+                } else {
+                    nextValue += preFinalOutput[k];
+                }
+            }
+            const replaceStartIndex = divideIndex - lastValue.length;
+            const replaceEndIndex = divideIndex + nextValue.length;
+            const intLastValue = Number(lastValue);
+            const intNextValue = Number(nextValue);
+            const CalculateValue = String(intLastValue / intNextValue);
+
+
+            // ....................
+
+            let finalOutput = preFinalOutput.substring(0, replaceStartIndex) + CalculateValue + preFinalOutput.substring(replaceEndIndex+1);
+            setPreFinalOutput(finalOutput);
+            console.log(finalOutput)
+
+        }
+        else if (['×'].includes(preFinalOutput)) {
+
+        }
+        else if (['﹪'].includes(preFinalOutput)) {
+
+        } else if (['+', '-'].includes(preFinalOutput)) {
+
+        }
+    }
+
+    // useEffect(()=>{
+    //     console.log('pf',preFinalOutput);
+    // })
 
     const HandelMultipleDot = (str) => {
         let dotCnt = 0;
-        for(let i=str.length-1; i>=0; i--){
-            if(dotCnt>=1){
+        for (let i = str.length - 1; i >= 0; i--) {
+            if (dotCnt >= 1) {
                 return false;
             }
-            else if(str[i]==='.'){
+            else if (str[i] === '.') {
                 dotCnt++;
             }
         }
@@ -23,8 +73,8 @@ function Calculator() {
     }
 
 
-    const HandelCommonInput = (value) =>{
-        
+    const HandelCommonInput = (value) => {
+
         if (['﹪', '+', '-', '÷', '×', '.'].includes(value)) {
             const pvrVal = inputLog.length > 0 ? inputLog[inputLog.length - 1] : null;
             if (['﹪', '+', '-', '÷', '×', '.'].includes(pvrVal)) {
@@ -35,7 +85,7 @@ function Calculator() {
                 setInputLog(input);
             }
 
-        }else{
+        } else {
 
             let input = inputLog;
             input += value;
@@ -49,12 +99,13 @@ function Calculator() {
             if (HandelMultipleDot(inputLog)) {
                 HandelCommonInput(value);
             }
-        }else if(['﹪', '+', '-', '÷', '×', '.'].includes(value) && inputLog.length===0) {
-            setInputLog(`0${value}`);
-        }else{
+        } else if (['﹪', '+', '-', '÷', '×', '.'].includes(value) && inputLog.length === 0) {
+            setInputLog(`0${value}`)
+        } else {
             HandelCommonInput(value);
         }
     }
+
 
     const DeleteLog = (val) => {
         Vibration.vibrate(10);
@@ -69,6 +120,7 @@ function Calculator() {
         if (scrollViewRef.current) {
             scrollViewRef.current.scrollToEnd({ animated: true });
         }
+        setPreFinalOutput(inputLog);
     }, [inputLog]);
 
 
@@ -290,7 +342,7 @@ const styles = StyleSheet.create({
     },
     text_black: {
         color: '#2a2a2a',
-        fontWeight:500
+        fontWeight: 500
     },
 
     // ...................
