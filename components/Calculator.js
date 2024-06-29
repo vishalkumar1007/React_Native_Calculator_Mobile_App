@@ -289,7 +289,6 @@ function Calculator() {
                 </View>
                 <View style={styles.final_output_container}>
                     <Text style={styles.input_record_text}>{FinalOutput === '' ? '0' : FinalOutput}</Text>
-                    {/* <Text style={styles.input_record_text}>{copyInputLog === '' ? '0' : copyInputLog}</Text> */}
                 </View>
             </View>
             <View style={styles.input_view}>
