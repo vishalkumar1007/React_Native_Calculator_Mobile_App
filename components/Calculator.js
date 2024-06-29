@@ -6,92 +6,242 @@ import Svg, { Path, Line, Circle } from 'react-native-svg';
 function Calculator() {
     const scrollViewRef = useRef();
     const [inputLog, setInputLog] = useState('');
-    const [finalOutput, setFinalOutput] = useState(0);
-    const [preFinalOutput, setPreFinalOutput] = useState('');
+    const [FinalOutput, setFinalOutput] = useState('');
 
-    const CalculationLogic = () => {
-        if (['÷'].some(operator => preFinalOutput.includes(operator)) && preFinalOutput[preFinalOutput.length - 1] !== '÷') {
+
+    // Perform Calculation
+
+    const Calculate = () => {
+        let loopLimit = 1000;
+        let newCopyInputLog = FinalOutput;
+        console.log('On entry 1: ', newCopyInputLog);
+    
+        while (['÷'].some(operator => newCopyInputLog.includes(operator)) && !['﹪', '+', '-', '×', '÷'].includes(newCopyInputLog[newCopyInputLog.length-1]) && loopLimit >= 0) {
+            console.log('entry 1: ', newCopyInputLog);
             let lastValue = '';
             let divideIndex = -1;
-            for (let i = 0; i < preFinalOutput.length; i++) {
-                if (['﹪', '+', '-', '×'].includes(preFinalOutput[i])) {
+    
+            for (let i = 0; i < newCopyInputLog.length; i++) {
+                if (['﹪', '+', '-', '×'].includes(newCopyInputLog[i])) {
                     lastValue = '';
-                } else if ('÷' === preFinalOutput[i]) {
+                } else if ('÷' === newCopyInputLog[i]) {
                     divideIndex = i;
                     break;
                 } else {
-                    lastValue += preFinalOutput[i];
+                    lastValue += newCopyInputLog[i];
                 }
             }
+    
             let nextValue = '';
-            for (let k = divideIndex + 1; k < preFinalOutput.length; k++) {
-                if (['﹪', '+', '-', '×'].includes(preFinalOutput[k])) {
+            for (let k = divideIndex + 1; k < newCopyInputLog.length; k++) {
+                if (['﹪', '+', '-', '×', '÷'].includes(newCopyInputLog[k])) {
                     break;
                 } else {
-                    nextValue += preFinalOutput[k];
+                    nextValue += newCopyInputLog[k];
                 }
             }
+    
             const replaceStartIndex = divideIndex - lastValue.length;
             const replaceEndIndex = divideIndex + nextValue.length;
             const intLastValue = Number(lastValue);
             const intNextValue = Number(nextValue);
             const CalculateValue = String(intLastValue / intNextValue);
-
-
-            // ....................
-
-            let finalOutput = preFinalOutput.substring(0, replaceStartIndex) + CalculateValue + preFinalOutput.substring(replaceEndIndex+1);
-            setPreFinalOutput(finalOutput);
-            console.log(finalOutput)
-
+    
+            newCopyInputLog = newCopyInputLog.substring(0, replaceStartIndex) + CalculateValue + newCopyInputLog.substring(replaceEndIndex + 1);
+            loopLimit--;
         }
-        else if (['×'].includes(preFinalOutput)) {
-
+    
+        console.log('On entry 2: ', newCopyInputLog);
+    
+        while (['×'].some(operator => newCopyInputLog.includes(operator)) && !['﹪', '+', '-', '×', '÷'].includes(newCopyInputLog[newCopyInputLog.length-1]) && loopLimit >= 0) {
+            console.log('entry 2: ', newCopyInputLog);
+            let lastValue = '';
+            let divideIndex = -1;
+    
+            for (let i = 0; i < newCopyInputLog.length; i++) {
+                if (['﹪', '+', '-', '÷'].includes(newCopyInputLog[i])) {
+                    lastValue = '';
+                } else if ('×' === newCopyInputLog[i]) {
+                    divideIndex = i;
+                    break;
+                } else {
+                    lastValue += newCopyInputLog[i];
+                }
+            }
+    
+            let nextValue = '';
+            for (let k = divideIndex + 1; k < newCopyInputLog.length; k++) {
+                if (['﹪', '+', '-', '×', '÷'].includes(newCopyInputLog[k])) {
+                    break;
+                } else {
+                    nextValue += newCopyInputLog[k];
+                }
+            }
+    
+            const replaceStartIndex = divideIndex - lastValue.length;
+            const replaceEndIndex = divideIndex + nextValue.length;
+            const intLastValue = Number(lastValue);
+            const intNextValue = Number(nextValue);
+            const CalculateValue = String(intLastValue * intNextValue);
+    
+            newCopyInputLog = newCopyInputLog.substring(0, replaceStartIndex) + CalculateValue + newCopyInputLog.substring(replaceEndIndex + 1);
+            loopLimit--;
         }
-        else if (['﹪'].includes(preFinalOutput)) {
-
-        } else if (['+', '-'].includes(preFinalOutput)) {
-
+    
+        console.log('On entry 3: ', newCopyInputLog);
+    
+        while (['﹪'].some(operator => newCopyInputLog.includes(operator)) && !['﹪', '+', '-', '×', '÷'].includes(newCopyInputLog[newCopyInputLog.length-1]) && loopLimit >= 0) {
+            console.log('entry 3: ', newCopyInputLog);
+            let lastValue = '';
+            let divideIndex = -1;
+    
+            for (let i = 0; i < newCopyInputLog.length; i++) {
+                if (['×', '+', '-', '÷'].includes(newCopyInputLog[i])) {
+                    lastValue = '';
+                } else if ('﹪' === newCopyInputLog[i]) {
+                    divideIndex = i;
+                    break;
+                } else {
+                    lastValue += newCopyInputLog[i];
+                }
+            }
+    
+            let nextValue = '';
+            for (let k = divideIndex + 1; k < newCopyInputLog.length; k++) {
+                if (['﹪', '+', '-', '×', '÷'].includes(newCopyInputLog[k])) {
+                    break;
+                } else {
+                    nextValue += newCopyInputLog[k];
+                }
+            }
+    
+            const replaceStartIndex = divideIndex - lastValue.length;
+            const replaceEndIndex = divideIndex + nextValue.length;
+            const intLastValue = Number(lastValue);
+            const intNextValue = Number(nextValue);
+            const CalculateValue = String(intLastValue % intNextValue);
+    
+            newCopyInputLog = newCopyInputLog.substring(0, replaceStartIndex) + CalculateValue + newCopyInputLog.substring(replaceEndIndex + 1);
+            loopLimit--;
         }
-    }
+    
+        console.log('On entry 4: ', newCopyInputLog);
+    
+        while (['+', '-'].some(operator => newCopyInputLog.includes(operator)) && !['﹪', '+', '-', '×', '÷'].includes(newCopyInputLog[newCopyInputLog.length-1]) && loopLimit >= 0) {
+            console.log('entry 4: ', newCopyInputLog);
+            let firstOperand = '';
+            let operator = '';
+            let secondOperand = '';
+            let operator_index = 0;
+            let lastIndex = 0;
+            let allow = true;
+    
+            for (let i = 0; i < newCopyInputLog.length; i++) {
+                if (allow === true && newCopyInputLog[0] === '-') {
+                    firstOperand += '-';
+                    allow = false;
+                } else {
+                    if (newCopyInputLog[i] === '+' || newCopyInputLog[i] === '-') {
+                        operator = newCopyInputLog[i];
+                        operator_index = i;
+                        break;
+                    } else {
+                        firstOperand += newCopyInputLog[i];
+                    }
+                }
+            }
+            
+            for (let j = operator_index + 1; j < newCopyInputLog.length; j++) {
+                if (newCopyInputLog[j] === '+' || newCopyInputLog[j] === '-' || (newCopyInputLog.length - 1) === j) {
+                    if ((newCopyInputLog.length - 1) === j) {
+                        secondOperand += newCopyInputLog[j];
+                        lastIndex = j;
+                        break;
+                    } else {
+                        lastIndex = j;
+                        break;
+                    }
+                } else {
+                    secondOperand += newCopyInputLog[j];
+                }
+            }
+            
+            if (operator === '' || operator_index === 0) {
+                break;
+            }
 
-    // useEffect(()=>{
-    //     console.log('pf',preFinalOutput);
-    // })
+            let internal_finalOutput = 0;
+            const output = operator === '+' ? Number(firstOperand) + Number(secondOperand) : Number(firstOperand) - Number(secondOperand);
+            
+            if ((newCopyInputLog.length - 1) === lastIndex) {
+                internal_finalOutput = newCopyInputLog.substring(0, 0) + output + newCopyInputLog.substring(lastIndex + 1);
+            } else {
+                internal_finalOutput = newCopyInputLog.substring(0, 0) + output + newCopyInputLog.substring(lastIndex);
+            }
+            console.log('entry 4 check 3: ', newCopyInputLog , ' : ', internal_finalOutput);
+            
+            newCopyInputLog = internal_finalOutput;
+            loopLimit--;
+            console.log('entry 4 check 4: ', newCopyInputLog , ' : ', internal_finalOutput);
+        }
+    
+        if (['﹪', '+', '-', '×', '÷'].includes(newCopyInputLog[newCopyInputLog.length - 1])) {
+            newCopyInputLog = newCopyInputLog.substring(0, newCopyInputLog.length - 1);
+        }
+    
+        console.log('On exit : ', newCopyInputLog);
+        setFinalOutput(newCopyInputLog==='NaN'?'Error':newCopyInputLog);
+    };
+    
+
+    useEffect(()=>{
+        Calculate();
+    },[FinalOutput])
+
+    const isEqualTo = ()=>{
+        console.warn('work in progress');
+    }    
+
+    // Handel Multiple Dot's
 
     const HandelMultipleDot = (str) => {
         let dotCnt = 0;
         for (let i = str.length - 1; i >= 0; i--) {
+            if (['﹪', '+', '-', '÷', '×'].includes(str[i])) {
+                return dotCnt >= 1 ? false : true;
+            }
             if (dotCnt >= 1) {
                 return false;
-            }
-            else if (str[i] === '.') {
+            } else if (str[i] === '.') {
                 dotCnt++;
             }
         }
         return true;
     }
 
+    // Handel Common Operator
 
     const HandelCommonInput = (value) => {
-
         if (['﹪', '+', '-', '÷', '×', '.'].includes(value)) {
             const pvrVal = inputLog.length > 0 ? inputLog[inputLog.length - 1] : null;
             if (['﹪', '+', '-', '÷', '×', '.'].includes(pvrVal)) {
-                setInputLog(inputLog.substr(0, inputLog.length - 1) + value)
-            } else {
+                setInputLog(inputLog.substring(0, inputLog.length - 1) + value);
+
+            }
+            else {
                 let input = inputLog;
                 input += value;
                 setInputLog(input);
             }
 
         } else {
-
             let input = inputLog;
             input += value;
             setInputLog(input);
         }
     }
+
+    // Handel User Input
 
     const HandelOnPress = (value) => {
         Vibration.vibrate(10);
@@ -100,30 +250,31 @@ function Calculator() {
                 HandelCommonInput(value);
             }
         } else if (['﹪', '+', '-', '÷', '×', '.'].includes(value) && inputLog.length === 0) {
-            setInputLog(`0${value}`)
+            setInputLog(`0${value}`);
         } else {
             HandelCommonInput(value);
         }
     }
 
+    // Handel The Delete Log 
 
     const DeleteLog = (val) => {
         Vibration.vibrate(10);
         if (val === 'AC') {
             setInputLog('');
         } else if (val === 'X') {
-            setInputLog(inputLog.substr(0, inputLog.length - 1))
+            setInputLog(inputLog.substring(0, inputLog.length - 1));
         }
     }
+
+    // Handel Scroll Animation
 
     useEffect(() => {
         if (scrollViewRef.current) {
             scrollViewRef.current.scrollToEnd({ animated: true });
         }
-        setPreFinalOutput(inputLog);
+        setFinalOutput(inputLog);
     }, [inputLog]);
-
-
 
     return (
         <SafeAreaView style={styles.calculator_main}>
@@ -133,11 +284,12 @@ function Calculator() {
                         contentContainerStyle={styles.input_final_record}
                         ref={scrollViewRef}
                     >
-                        <Text style={styles.final_output_text}>{inputLog}</Text>
+                        <Text style={styles.final_output_text}>{inputLog === '' ? '0' : inputLog}</Text>
                     </ScrollView>
                 </View>
                 <View style={styles.final_output_container}>
-                    <Text style={styles.input_record_text}>{finalOutput}</Text>
+                    <Text style={styles.input_record_text}>{FinalOutput === '' ? '0' : FinalOutput}</Text>
+                    {/* <Text style={styles.input_record_text}>{copyInputLog === '' ? '0' : copyInputLog}</Text> */}
                 </View>
             </View>
             <View style={styles.input_view}>
@@ -274,7 +426,7 @@ function Calculator() {
                             <Text style={styles.cal_btn_text}>.</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_operation]} >
+                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_operation]} onPress={() => { isEqualTo()}}>
                             <Text style={styles.cal_btn_text}>=</Text>
                         </TouchableOpacity>
                     </View>
