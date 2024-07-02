@@ -10,14 +10,11 @@ function Calculator() {
 
 
     // Perform Calculation
-
     const Calculate = () => {
         let loopLimit = 1000;
         let newCopyInputLog = FinalOutput;
-        console.log('On entry 1: ', newCopyInputLog);
     
         while (['÷'].some(operator => newCopyInputLog.includes(operator)) && !['﹪', '+', '-', '×', '÷'].includes(newCopyInputLog[newCopyInputLog.length-1]) && loopLimit >= 0) {
-            console.log('entry 1: ', newCopyInputLog);
             let lastValue = '';
             let divideIndex = -1;
     
@@ -50,11 +47,9 @@ function Calculator() {
             newCopyInputLog = newCopyInputLog.substring(0, replaceStartIndex) + CalculateValue + newCopyInputLog.substring(replaceEndIndex + 1);
             loopLimit--;
         }
-    
-        console.log('On entry 2: ', newCopyInputLog);
+        
     
         while (['×'].some(operator => newCopyInputLog.includes(operator)) && !['﹪', '+', '-', '×', '÷'].includes(newCopyInputLog[newCopyInputLog.length-1]) && loopLimit >= 0) {
-            console.log('entry 2: ', newCopyInputLog);
             let lastValue = '';
             let divideIndex = -1;
     
@@ -87,11 +82,8 @@ function Calculator() {
             newCopyInputLog = newCopyInputLog.substring(0, replaceStartIndex) + CalculateValue + newCopyInputLog.substring(replaceEndIndex + 1);
             loopLimit--;
         }
-    
-        console.log('On entry 3: ', newCopyInputLog);
-    
+        
         while (['﹪'].some(operator => newCopyInputLog.includes(operator)) && !['﹪', '+', '-', '×', '÷'].includes(newCopyInputLog[newCopyInputLog.length-1]) && loopLimit >= 0) {
-            console.log('entry 3: ', newCopyInputLog);
             let lastValue = '';
             let divideIndex = -1;
     
@@ -125,10 +117,8 @@ function Calculator() {
             loopLimit--;
         }
     
-        console.log('On entry 4: ', newCopyInputLog);
-    
+        
         while (['+', '-'].some(operator => newCopyInputLog.includes(operator)) && !['﹪', '+', '-', '×', '÷'].includes(newCopyInputLog[newCopyInputLog.length-1]) && loopLimit >= 0) {
-            console.log('entry 4: ', newCopyInputLog);
             let firstOperand = '';
             let operator = '';
             let secondOperand = '';
@@ -178,18 +168,17 @@ function Calculator() {
             } else {
                 internal_finalOutput = newCopyInputLog.substring(0, 0) + output + newCopyInputLog.substring(lastIndex);
             }
-            console.log('entry 4 check 3: ', newCopyInputLog , ' : ', internal_finalOutput);
+            // console.log('entry 4 check 3: ', newCopyInputLog , ' : ', internal_finalOutput);
             
             newCopyInputLog = internal_finalOutput;
             loopLimit--;
-            console.log('entry 4 check 4: ', newCopyInputLog , ' : ', internal_finalOutput);
+            // console.log('entry 4 check 4: ', newCopyInputLog , ' : ', internal_finalOutput);
         }
     
         if (['﹪', '+', '-', '×', '÷'].includes(newCopyInputLog[newCopyInputLog.length - 1])) {
             newCopyInputLog = newCopyInputLog.substring(0, newCopyInputLog.length - 1);
         }
-    
-        console.log('On exit : ', newCopyInputLog);
+
         setFinalOutput(newCopyInputLog==='NaN'?'Error':newCopyInputLog);
     };
     
@@ -199,11 +188,10 @@ function Calculator() {
     },[FinalOutput])
 
     const isEqualTo = ()=>{
-        console.warn('work in progress');
+        setInputLog(FinalOutput);
     }    
 
     // Handel Multiple Dot's
-
     const HandelMultipleDot = (str) => {
         let dotCnt = 0;
         for (let i = str.length - 1; i >= 0; i--) {
@@ -220,7 +208,6 @@ function Calculator() {
     }
 
     // Handel Common Operator
-
     const HandelCommonInput = (value) => {
         if (['﹪', '+', '-', '÷', '×', '.'].includes(value)) {
             const pvrVal = inputLog.length > 0 ? inputLog[inputLog.length - 1] : null;
@@ -242,7 +229,6 @@ function Calculator() {
     }
 
     // Handel User Input
-
     const HandelOnPress = (value) => {
         Vibration.vibrate(10);
         if (value === '.') {
@@ -257,7 +243,6 @@ function Calculator() {
     }
 
     // Handel The Delete Log 
-
     const DeleteLog = (val) => {
         Vibration.vibrate(10);
         if (val === 'AC') {
@@ -268,7 +253,6 @@ function Calculator() {
     }
 
     // Handel Scroll Animation
-
     useEffect(() => {
         if (scrollViewRef.current) {
             scrollViewRef.current.scrollToEnd({ animated: true });
@@ -309,7 +293,7 @@ function Calculator() {
                                     viewBox="1 0 24 24"
                                     fill="none"
                                     stroke="#2c2c2c"
-                                    strokeWidth="1.8"
+                                    strokeWidth="1.4"
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
                                 >
@@ -319,7 +303,7 @@ function Calculator() {
                             </View>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.cal_btn} onPress={() => { HandelOnPress('﹪') }}>
+                        <TouchableOpacity style={styles.cal_btn } onPress={() => { HandelOnPress('﹪') }}>
                             <View style={[styles.cal_btn_text, styles.text_black]} >
                                 <Svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -328,7 +312,7 @@ function Calculator() {
                                     viewBox="0 -1 24 24"
                                     fill="none"
                                     stroke="#2a2a2a"
-                                    strokeWidth="2.4"
+                                    strokeWidth="1.6"
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
                                 >
@@ -493,7 +477,7 @@ const styles = StyleSheet.create({
     },
     text_black: {
         color: '#2a2a2a',
-        fontWeight: 500
+        // fontWeight: 500
     },
 
     // ...................

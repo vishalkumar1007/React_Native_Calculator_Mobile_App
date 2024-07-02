@@ -1,25 +1,66 @@
-import { View,Text,StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+// import Svg, { Path, Line, Circle } from 'react-native-svg';
+import { currencySvg } from "./svg";
+
 
 
 const styles = StyleSheet.create({
-    main:{
-        width:'100%',
-        height:'100%',
-        display:'flex',
-        justifyContent:'center',
-        alignItems:'center',       
+    main: {
+        backgroundColor: 'red',
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
-    bigText:{
-        fontSize:25,
-        color:'red',
+    converters: {
+        backgroundColor: 'green',
+        width: '95%',
+        height: '97.5%',
+    },
+    featureBox: {
+        backgroundColor: 'gray',
+        width: '30%',
+        height: '15%'
+    },
+    featureInter: {
+        backgroundColor: 'pink',
+        width: 120,
+        height: 120
+    },
+    svgBox:{
+        backgroundColor:'blue'
+    },
+    titleBox:{
+
+    },
+    titleText:{
+
     }
+
 })
 
-const Converter = ()=>{
-    return(
+const Converter = () => {
+    
+
+    return (
         <View style={styles.main}>
-            <Text style={styles.bigText}>Coming Soon</Text>
+            <View style={styles.converters}>
+                <FeatureBox svg={currencySvg} title = {'Currency'}/>
+            </View>
         </View>
     )
 }
-export default Converter
+
+const FeatureBox = ({svg,title}) => {
+
+    return (
+        <View style={styles.featureInter}>
+            <View style = {styles.svgBox}>
+                {svg}
+            </View>
+            <View style={styles.titleBox}>
+                <Text style={styles.titleText}>{title}</Text>
+            </View>
+        </View>
+    )
+}
+export default Converter;
