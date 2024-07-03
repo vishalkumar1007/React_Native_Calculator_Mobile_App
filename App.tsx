@@ -152,7 +152,7 @@ function App(): React.JSX.Element {
   useEffect(() => {
     const backAction = () => {
       setShowAlert(true);
-      return true; 
+      return true;
     }
 
     const handleOnBack = BackHandler.addEventListener(

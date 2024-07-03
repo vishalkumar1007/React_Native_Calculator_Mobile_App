@@ -1,25 +1,38 @@
-import { View, Text, StyleSheet, TouchableOpacity , ScrollView } from "react-native";
-// import Svg, { Path, Line, Circle } from 'react-native-svg';
+import { View, Text, StyleSheet, TouchableOpacity , ScrollView , Modal} from "react-native";
 import { currencySvg, lengthSvg, speedSvg , timeSvg ,financeSvg , internetDataSvg, discountSvg, temperatureSvg, areaSvg} from "./svg";
-
-
+import Area from "./Area/Area";
+import {useEffect, useState} from 'react'
 
 const Converter = () => {
+    const [openComponent, setOpenComponent] = useState('close');
+
+    useEffect(()=>{
+        // console.log('step 7')
+        console.log('this is component : ',openComponent)
+        // console.log('step 8')
+    },[openComponent])
+
+    const openCurrentComponent = (titleSet)=>{ 
+        // console.log('step 5')
+        setOpenComponent(titleSet);
+        // console.log('step 6')
+        // console.log(titleSet)
+    }
 
     return (
         <View style={styles.main}>
             <View style={styles.fixedMain}>
                 <ScrollView style={styles.scrConverter}>
                     <View style={styles.converters}>
-                        <FeatureBox svg={currencySvg} title = {'Currency'}/>
-                        <FeatureBox svg={lengthSvg} title = {'Length'}/>
-                        <FeatureBox svg={speedSvg} title = {'Speed'}/>
-                        <FeatureBox svg={timeSvg} title = {'Time'}/>
-                        <FeatureBox svg={financeSvg} title = {'Finance'}/>
-                        <FeatureBox svg={internetDataSvg} title = {'Data'}/>
-                        <FeatureBox svg={discountSvg} title = {'Discount'}/>
-                        <FeatureBox svg={temperatureSvg} title = {'Temperature'}/>
-                        <FeatureBox svg={areaSvg} title = {'Area'}/>
+                        <FeatureBox svg={currencySvg} title = {'Currency'} currentComponent={(titleSet)=>openCurrentComponent(titleSet)}/>
+                        <FeatureBox svg={lengthSvg} title = {'Length'} currentComponent={(titleSet)=>openCurrentComponent(titleSet)}/>
+                        <FeatureBox svg={speedSvg} title = {'Speed'} currentComponent={(titleSet)=>openCurrentComponent(titleSet)}/>
+                        <FeatureBox svg={timeSvg} title = {'Time'} currentComponent={(titleSet)=>openCurrentComponent(titleSet)}/>
+                        <FeatureBox svg={financeSvg} title = {'Finance'} currentComponent={(titleSet)=>openCurrentComponent(titleSet)}/>
+                        <FeatureBox svg={internetDataSvg} title = {'Data'} currentComponent={(titleSet)=>openCurrentComponent(titleSet)}/>
+                        <FeatureBox svg={discountSvg} title = {'Discount'} currentComponent={(titleSet)=>openCurrentComponent(titleSet)}/>
+                        <FeatureBox svg={temperatureSvg} title = {'Temperature'} currentComponent={(titleSet)=>openCurrentComponent(titleSet)}/>
+                        <FeatureBox svg={areaSvg} title = {'Area'} currentComponent={(titleSet)=>openCurrentComponent(titleSet)}/>
                     </View>
                 </ScrollView>
             </View>
@@ -27,10 +40,17 @@ const Converter = () => {
     )
 }
 
-const FeatureBox = ({svg,title}) => {
+const FeatureBox = ({svg,title,currentComponent}) => {
     
+    const UpdateThisComponent = (pageTitle)=>{
+        // console.log('...............',pageTitle);
+        // console.log('step 1')
+        currentComponent(pageTitle);
+        // console.log('step 2')
+    }
+
     return (
-        <TouchableOpacity style={styles.featureInter}>
+        <TouchableOpacity style={styles.featureInter} onPress={()=>{UpdateThisComponent(title)}}>
             <View style = {styles.svgBox}>
                 {svg}
             </View>
