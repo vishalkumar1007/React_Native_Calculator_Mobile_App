@@ -10,17 +10,16 @@ import Length from "./Length/Length";
 import Speed from "./Speed/Speed";
 import Temperature from "./Temperature/Temperature";
 import Time from "./Time/Time";
+import Inputs from "./Inputs/Inputs";
 // import { BlurView } from '@react-native-community/blur';
 
 const Converter = () => {
     const [openComponent, setOpenComponent] = useState('close');
-    // const [showText, setShowText] = useState('No data')
-    const [modalVisible, setModalVisible] = useState(true);
 
 
-    useEffect(() => {
-        console.log('this is component : ', openComponent)
-    }, [openComponent])
+    // useEffect(() => {
+    //     console.log('this is component : ', openComponent)
+    // }, [openComponent])
 
     const openCurrentComponent = (titleSet) => {
         setOpenComponent(titleSet);
@@ -62,20 +61,20 @@ const Converter = () => {
             <View style={styles.fixedMain}>
                 <ScrollView style={styles.scrConverter}>
                     <View style={styles.converters}>
+                        <FeatureBox svg={areaSvg} title={'Area'} currentComponent={(titleSet) => openCurrentComponent(titleSet)} />
                         <FeatureBox svg={currencySvg} title={'Currency'} currentComponent={(titleSet) => openCurrentComponent(titleSet)} />
-                        <FeatureBox svg={lengthSvg} title={'Length'} currentComponent={(titleSet) => openCurrentComponent(titleSet)} />
-                        <FeatureBox svg={speedSvg} title={'Speed'} currentComponent={(titleSet) => openCurrentComponent(titleSet)} />
-                        <FeatureBox svg={timeSvg} title={'Time'} currentComponent={(titleSet) => openCurrentComponent(titleSet)} />
-                        <FeatureBox svg={financeSvg} title={'Finance'} currentComponent={(titleSet) => openCurrentComponent(titleSet)} />
                         <FeatureBox svg={internetDataSvg} title={'Data'} currentComponent={(titleSet) => openCurrentComponent(titleSet)} />
                         <FeatureBox svg={discountSvg} title={'Discount'} currentComponent={(titleSet) => openCurrentComponent(titleSet)} />
+                        <FeatureBox svg={financeSvg} title={'Finance'} currentComponent={(titleSet) => openCurrentComponent(titleSet)} />
+                        <FeatureBox svg={lengthSvg} title={'Length'} currentComponent={(titleSet) => openCurrentComponent(titleSet)} />
+                        <FeatureBox svg={speedSvg} title={'Speed'} currentComponent={(titleSet) => openCurrentComponent(titleSet)} />
                         <FeatureBox svg={temperatureSvg} title={'Temperature'} currentComponent={(titleSet) => openCurrentComponent(titleSet)} />
-                        <FeatureBox svg={areaSvg} title={'Area'} currentComponent={(titleSet) => openCurrentComponent(titleSet)} />
+                        <FeatureBox svg={timeSvg} title={'Time'} currentComponent={(titleSet) => openCurrentComponent(titleSet)} />
                     </View>
                 </ScrollView>
             </View>
             <Modal
-                animationType="slide"
+                animationType="none"
                 transparent={true}
                 visible={openComponent === 'close' ? false : true}
                 style={styles.modalMain}

@@ -403,9 +403,9 @@ const Inputs = ({UserInputLog,CalculatedLog,disableBtnNumber}) => {
 
 const styles = StyleSheet.create({
     main: {
-        // backgroundColor: 'orange',
+        // backgroundColor: '#219ebc',
         width: '100%',
-        height: '50%',
+        height: '100%',
         display: 'flex'
     },
     calculator_main: {
