@@ -181,7 +181,7 @@ function App(): React.JSX.Element {
                 <Text style={styles.headingText}>Are You Sure You Want To Exit</Text>
               </View>
               <View style={styles.alertButtons}>
-                <TouchableOpacity style={styles.exitBtn} onPress={() => BackHandler.exitApp()} >
+                <TouchableOpacity style={styles.exitBtn} onPress={() => {BackHandler.exitApp() ; setShowAlert(false)} } >
                   <Text style={styles.btnText}>Yes</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.stayBtn} onPress={() => setShowAlert(false)} >

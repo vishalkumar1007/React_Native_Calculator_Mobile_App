@@ -1,11 +1,11 @@
 import {View,Text,StyleSheet,TouchableOpacity} from 'react-native';
 import {useState,useEffect} from 'react';
 
-const Data = ({openComponent,closeComponentProp})=>{
+const Speed = ({openComponent,closeComponentProp})=>{
     const [closeComponent , setCloseComponent] = useState('')
         
     useEffect(()=>{
-        console.log('Data : ',openComponent);
+        console.log('Speed : ',openComponent);
         setCloseComponent(openComponent)
     },[openComponent])
 
@@ -20,7 +20,7 @@ const Data = ({openComponent,closeComponentProp})=>{
 }
 const styles = StyleSheet.create({
     main:{
-        backgroundColor:'purple',
+        backgroundColor:'white',
         width:'100%',
         height:'100%',
         display:'flex',
@@ -47,4 +47,4 @@ const styles = StyleSheet.create({
         color:'#ff0000db',
     },
 })
-export default Data;
+export default Speed;
