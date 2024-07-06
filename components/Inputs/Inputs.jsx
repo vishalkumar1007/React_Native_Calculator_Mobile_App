@@ -3,7 +3,7 @@ import { SafeAreaView, View, Text, TextInput, Alert, TouchableOpacity , StyleShe
 import { Vibration } from 'react-native';
 import Svg, { Path, Line, Circle } from 'react-native-svg';
 
-const Inputs = ({UserInputLog,CalculatedLog,disableBtnNumber}) => {
+const Inputs = ({colorMode,UserInputLog,CalculatedLog,disableBtnNumber}) => {
     const [inputLog, setInputLog] = useState('');
     const [userInputCalculation , setUserInputCalculation] = useState('');
 

@@ -6,8 +6,7 @@ import Calculator from './components/Calculator';
 import Converter from './components/Converter';
 import { useState } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import {Appearance} from 'react-native';
-// import bg from './bg.avif'
+import changeNavigationBarColor from 'react-native-navigation-bar-color';
 
 
 function App(): React.JSX.Element {
@@ -21,11 +20,14 @@ function App(): React.JSX.Element {
 
   useEffect(()=>{
     // const ColorMode = Appearance.getColorScheme();
-    console.log('color : ' , colorScheme);
+    // console.log('color : ' , colorScheme);
     if(colorScheme==='light'){
-      setThemScreen('white');
+      setThemScreen('#f0f0f0');
+      changeNavigationBarColor('#f0f0f0',false,false);
     }else {
       setThemScreen('black');
+      changeNavigationBarColor('black',true,false);
+      
     }
   },[colorScheme]);
 

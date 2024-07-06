@@ -3,17 +3,20 @@ import { SafeAreaView, View, Text, StyleSheet, TextInput, Alert, TouchableOpacit
 import { Vibration } from 'react-native';
 import Svg, { Path, Line, Circle } from 'react-native-svg';
 
-function Calculator(ScreenColorMode) {
+function Calculator(colorMode) {
     const scrollViewRef = useRef();
     const [inputLog, setInputLog] = useState('');
     const [FinalOutput, setFinalOutput] = useState('');
 
+    useEffect(()=>{
+        console.log(colorMode.ScreenColorMode);
+    },[])
 
     // Perform Calculation
     const Calculate = () => {
         let loopLimit = 1000;
         let newCopyInputLog = FinalOutput;
-    
+            
         while (['÷'].some(operator => newCopyInputLog.includes(operator)) && !['﹪', '+', '-', '×', '÷'].includes(newCopyInputLog[newCopyInputLog.length-1]) && loopLimit >= 0) {
             let lastValue = '';
             let divideIndex = -1;
@@ -268,23 +271,23 @@ function Calculator(ScreenColorMode) {
                         contentContainerStyle={styles.input_final_record}
                         ref={scrollViewRef}
                     >
-                        <Text style={styles.final_output_text}>{inputLog === '' ? '0' : inputLog}</Text>
+                        <Text style={[styles.final_output_text , {color:colorMode.ScreenColorMode==='black'?'white':'#1c1c1c'}]}>{inputLog === '' ? '0' : inputLog}</Text>
                     </ScrollView>
                 </View>
                 <View style={styles.final_output_container}>
-                    <Text style={styles.input_record_text}>{FinalOutput === '' ? '0' : FinalOutput}</Text>
+                    <Text style={[styles.input_record_text, {color:colorMode.ScreenColorMode==='black'?'#ff9b00':'#000000'}]}>{FinalOutput === '' ? '0' : FinalOutput}</Text>
                 </View>
             </View>
             <View style={styles.input_view}>
                 <View style={styles.main_btn_view}>
                     {/* ........................... */}
                     <View style={styles.main_btn_view_arrange}>
-                        <TouchableOpacity style={styles.cal_btn} onPress={() => { DeleteLog('AC') }}>
-                            <Text style={[styles.cal_btn_text, styles.text_black]}  >AC</Text>
+                        <TouchableOpacity style={[styles.cal_btn, colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_T1:LightStyles.cal_btn_T1]} onPress={() => { DeleteLog('AC') }}>
+                            <Text style={[styles.cal_btn_text, styles.text_black , colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_text_T1:LightStyles.cal_btn_text_T1]}  >AC</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.cal_btn} onPress={() => { DeleteLog('X') }}>
-                            <View style={[styles.cal_btn_text, styles.text_black]}>
+                        <TouchableOpacity style={[styles.cal_btn, colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_T1:LightStyles.cal_btn_T1]} onPress={() => { DeleteLog('X') }}>
+                            <View style={[styles.cal_btn_text, styles.text_black,colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_text_T1:LightStyles.cal_btn_text_T1]}>
 
                                 <Svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -292,7 +295,7 @@ function Calculator(ScreenColorMode) {
                                     height={42}
                                     viewBox="1 0 24 24"
                                     fill="none"
-                                    stroke="#2c2c2c"
+                                    stroke={colorMode.ScreenColorMode==='#f0f0f0'?'#ff9b00':'black'}
                                     strokeWidth="1.4"
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
@@ -303,15 +306,15 @@ function Calculator(ScreenColorMode) {
                             </View>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.cal_btn } onPress={() => { HandelOnPress('﹪') }}>
-                            <View style={[styles.cal_btn_text, styles.text_black]} >
+                        <TouchableOpacity style={[styles.cal_btn  , colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_T1:LightStyles.cal_btn_T1]} onPress={() => { HandelOnPress('﹪') }}>
+                            <View style={[styles.cal_btn_text, styles.text_black,colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_text_T1:LightStyles.cal_btn_text_T1]} >
                                 <Svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="35.5"
                                     height="35.5"
                                     viewBox="0 -1 24 24"
                                     fill="none"
-                                    stroke="#2a2a2a"
+                                    stroke={colorMode.ScreenColorMode==='#f0f0f0'?'#ff9b00':'black'}
                                     strokeWidth="1.6"
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
@@ -323,53 +326,53 @@ function Calculator(ScreenColorMode) {
                             </View>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_operation]} onPress={() => { HandelOnPress('÷') }}>
-                            <Text style={styles.cal_btn_text} >÷</Text>
+                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_operation , colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_T2:LightStyles.cal_btn_T2]} onPress={() => { HandelOnPress('÷') }}>
+                            <Text style={[styles.cal_btn_text,colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_text_T2:LightStyles.cal_btn_text_T2]} >÷</Text>
                         </TouchableOpacity>
                     </View>
 
                     {/* ........................................... */}
                     <View style={styles.main_btn_view_arrange}>
-                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_number]} onPress={() => { HandelOnPress('7') }}>
-                            <Text style={styles.cal_btn_text} >7</Text>
+                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_number , colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_T3:LightStyles.cal_btn_T3]} onPress={() => { HandelOnPress('7') }}>
+                            <Text style={[styles.cal_btn_text,colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_text_T3:LightStyles.cal_btn_text_T3]} >7</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_number]} onPress={() => { HandelOnPress('8') }}>
-                            <Text style={styles.cal_btn_text}>8</Text>
+                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_number , colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_T3:LightStyles.cal_btn_T3]} onPress={() => { HandelOnPress('8') }}>
+                            <Text style={[styles.cal_btn_text,colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_text_T3:LightStyles.cal_btn_text_T3]}>8</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_number]} onPress={() => { HandelOnPress('9') }}>
-                            <Text style={styles.cal_btn_text}>9</Text>
+                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_number , colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_T3:LightStyles.cal_btn_T3]} onPress={() => { HandelOnPress('9') }}>
+                            <Text style={[styles.cal_btn_text,colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_text_T3:LightStyles.cal_btn_text_T3]}>9</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_operation]} onPress={() => { HandelOnPress('×') }}>
-                            <Text style={styles.cal_btn_text} > × </Text>
+                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_operation , colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_T2:LightStyles.cal_btn_T2]} onPress={() => { HandelOnPress('×') }}>
+                            <Text style={[styles.cal_btn_text,colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_text_T2:LightStyles.cal_btn_text_T2]} > × </Text>
                         </TouchableOpacity>
                     </View>
 
                     {/* .................................................. */}
                     <View style={styles.main_btn_view_arrange}>
-                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_number]} onPress={() => { HandelOnPress('4') }}>
-                            <Text style={styles.cal_btn_text} >4</Text>
+                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_number , colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_T3:LightStyles.cal_btn_T3]} onPress={() => { HandelOnPress('4') }}>
+                            <Text style={[styles.cal_btn_text,colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_text_T3:LightStyles.cal_btn_text_T3]} >4</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_number]} onPress={() => { HandelOnPress('5') }}>
-                            <Text style={styles.cal_btn_text}>5</Text>
+                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_number , colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_T3:LightStyles.cal_btn_T3]} onPress={() => { HandelOnPress('5') }}>
+                            <Text style={[styles.cal_btn_text,colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_text_T3:LightStyles.cal_btn_text_T3]}>5</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_number]} onPress={() => { HandelOnPress('6') }}>
-                            <Text style={styles.cal_btn_text} >6</Text>
+                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_number , colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_T3:LightStyles.cal_btn_T3]} onPress={() => { HandelOnPress('6') }}>
+                            <Text style={[styles.cal_btn_text,colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_text_T3:LightStyles.cal_btn_text_T3]} >6</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_operation]} onPress={() => { HandelOnPress('-') }}>
-                            <View style={styles.cal_btn_text}>
+                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_operation , colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_T2:LightStyles.cal_btn_T2]} onPress={() => { HandelOnPress('-') }}>
+                            <View style={[styles.cal_btn_text,colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_text_T2:LightStyles.cal_btn_text_T2]}>
                                 <Svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="24"
                                     height="24"
                                     viewBox="2 1 20 20"
                                     fill="none"
-                                    stroke="white"
+                                    stroke='white'
                                     strokeWidth={2}
                                     strokeLinecap="round"
                                     strokeLinejoin="round"
@@ -382,35 +385,35 @@ function Calculator(ScreenColorMode) {
 
                     {/* ........................................................ */}
                     <View style={styles.main_btn_view_arrange}>
-                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_number]} onPress={() => { HandelOnPress('1') }}>
-                            <Text style={styles.cal_btn_text} >1</Text>
+                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_number , colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_T3:LightStyles.cal_btn_T3]} onPress={() => { HandelOnPress('1') }}>
+                            <Text style={[styles.cal_btn_text,colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_text_T3:LightStyles.cal_btn_text_T3]} >1</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_number]} onPress={() => { HandelOnPress('2') }}>
-                            <Text style={styles.cal_btn_text}>2</Text>
+                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_number , colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_T3:LightStyles.cal_btn_T3]} onPress={() => { HandelOnPress('2') }}>
+                            <Text style={[styles.cal_btn_text,colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_text_T3:LightStyles.cal_btn_text_T3]}>2</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_number]} onPress={() => { HandelOnPress('3') }}>
-                            <Text style={styles.cal_btn_text}>3</Text>
+                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_number , colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_T3:LightStyles.cal_btn_T3]} onPress={() => { HandelOnPress('3') }}>
+                            <Text style={[styles.cal_btn_text,colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_text_T3:LightStyles.cal_btn_text_T3]}>3</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_operation]} onPress={() => { HandelOnPress('+') }}>
-                            <Text style={styles.cal_btn_text}>+</Text>
+                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_operation , colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_T2:LightStyles.cal_btn_T2]} onPress={() => { HandelOnPress('+') }}>
+                            <Text style={[styles.cal_btn_text,colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_text_T2:LightStyles.cal_btn_text_T2]}>+</Text>
                         </TouchableOpacity>
                     </View>
 
                     {/* ................................................................ */}
                     <View style={styles.main_btn_view_arrange}>
-                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_number, styles.take_two_width]} onPress={() => { HandelOnPress('0') }}>
-                            <Text style={styles.cal_btn_text}>0</Text>
+                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_number, styles.take_two_width , colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_T3:LightStyles.cal_btn_T3]} onPress={() => { HandelOnPress('0') }}>
+                            <Text style={[styles.cal_btn_text,colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_text_T3:LightStyles.cal_btn_text_T3]}>0</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_number]} onPress={() => { HandelOnPress('.') }}>
-                            <Text style={styles.cal_btn_text}>.</Text>
+                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_number , colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_T3:LightStyles.cal_btn_T3]} onPress={() => { HandelOnPress('.') }}>
+                            <Text style={[styles.cal_btn_text,colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_text_T3:LightStyles.cal_btn_text_T3]}>.</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_operation]} onPress={() => { isEqualTo()}}>
-                            <Text style={styles.cal_btn_text}>=</Text>
+                        <TouchableOpacity style={[styles.cal_btn, styles.cal_btn_operation , colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_T2:LightStyles.cal_btn_T2]} onPress={() => { isEqualTo()}}>
+                            <Text style={[styles.cal_btn_text,colorMode.ScreenColorMode==='black'?DarkStyles.cal_btn_text_T2:LightStyles.cal_btn_text_T2]}>=</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -519,5 +522,53 @@ const styles = StyleSheet.create({
         fontSize: 30,
         color: '#eeeeee',
     }
-})
+});
+
+const DarkStyles = StyleSheet.create({
+    cal_btn_T1:{
+        // backgroundColor:'#171717',
+    },
+    cal_btn_T2:{
+        // backgroundColor:'blue',
+    },
+    cal_btn_T3:{
+        backgroundColor:'#171717',
+    },
+    cal_btn_text_T1:{
+        color:'black'
+        
+    },
+    cal_btn_text_T2:{
+        // backgroundColor:'blue',
+        
+    },
+    cal_btn_text_T3:{
+        // color:'#101010'  // black
+    
+    },
+});
+const LightStyles = StyleSheet.create({
+    cal_btn_T1:{
+        backgroundColor:'white',
+    },
+    cal_btn_T2:{
+        // backgroundColor:'blue',
+    },
+    cal_btn_T3:{
+        backgroundColor:'white',
+    },
+    cal_btn_text_T1:{
+        color:'#ff9b00'
+        
+    },
+    cal_btn_text_T2:{
+        // backgroundColor:'blue',
+        
+    },
+    cal_btn_text_T3:{
+        color:'#101010'  // black
+
+    },
+});
+
 export default Calculator;

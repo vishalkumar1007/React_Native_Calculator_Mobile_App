@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Modal } from "react-native";
-import { currencySvg, lengthSvg, speedSvg, timeSvg, financeSvg, internetDataSvg, discountSvg, temperatureSvg, areaSvg } from "./svg";
+import { CurrencySvg, LengthSvg, SpeedSvg, TimeSvg, FinanceSvg, InternetDataSvg, DiscountSvg, TemperatureSvg, AreaSvg } from "./svg";
 import { useEffect, useState } from 'react';
 import Area from "./Area/Area";
 import Currency from "./Currency/Currency";
@@ -13,13 +13,13 @@ import Time from "./Time/Time";
 import Inputs from "./Inputs/Inputs";
 // import { BlurView } from '@react-native-community/blur';
 
-const Converter = (ScreenColorMode) => {
+const Converter = (colorMode) => {
     const [openComponent, setOpenComponent] = useState('close');
 
 
-    // useEffect(() => {
-    //     console.log('this is component : ', openComponent)
-    // }, [openComponent])
+    useEffect(() => {
+        console.log('this is component : ', colorMode.ScreenColorMode)
+    }, [colorMode])
 
     const openCurrentComponent = (titleSet) => {
         setOpenComponent(titleSet);
@@ -32,27 +32,27 @@ const Converter = (ScreenColorMode) => {
     const renderComponent = () => {
          {switch (openComponent) {
             case 'Area':
-                return <Area openComponent={openComponent} closeComponentProp={handelOpenComponent}/>
+                return <Area colorMode={colorMode.ScreenColorMode} openComponent={openComponent} closeComponentProp={handelOpenComponent}/>
             case 'Date':
-                return <Date openComponent={openComponent} closeComponentProp={handelOpenComponent}/>
+                return <Date colorMode={colorMode.ScreenColorMode} openComponent={openComponent} closeComponentProp={handelOpenComponent}/>
             case 'Discount':
-                return <Discount openComponent={openComponent} closeComponentProp={handelOpenComponent}/>
+                return <Discount colorMode={colorMode.ScreenColorMode} openComponent={openComponent} closeComponentProp={handelOpenComponent}/>
             case 'Currency':
-                return <Currency openComponent={openComponent} closeComponentProp={handelOpenComponent}/>
+                return <Currency colorMode={colorMode.ScreenColorMode} openComponent={openComponent} closeComponentProp={handelOpenComponent}/>
             case 'Finance':
-                return <Finance openComponent={openComponent} closeComponentProp={handelOpenComponent}/>
+                return <Finance colorMode={colorMode.ScreenColorMode} openComponent={openComponent} closeComponentProp={handelOpenComponent}/>
             case 'Length':
-                return <Length openComponent={openComponent} closeComponentProp={handelOpenComponent}/>
+                return <Length colorMode={colorMode.ScreenColorMode} openComponent={openComponent} closeComponentProp={handelOpenComponent}/>
             case 'Speed':
-                return <Speed openComponent={openComponent} closeComponentProp={handelOpenComponent}/>
+                return <Speed colorMode={colorMode.ScreenColorMode} openComponent={openComponent} closeComponentProp={handelOpenComponent}/>
             case 'Temperature':
-                return <Temperature openComponent={openComponent} closeComponentProp={handelOpenComponent}/>
+                return <Temperature colorMode={colorMode.ScreenColorMode} openComponent={openComponent} closeComponentProp={handelOpenComponent}/>
             case 'Time':
-                return <Time openComponent={openComponent} closeComponentProp={handelOpenComponent}/>
+                return <Time colorMode={colorMode.ScreenColorMode} openComponent={openComponent} closeComponentProp={handelOpenComponent}/>
             case 'Data':
-                return <Data openComponent={openComponent} closeComponentProp={handelOpenComponent}/>
+                return <Data colorMode={colorMode.ScreenColorMode} openComponent={openComponent} closeComponentProp={handelOpenComponent}/>
             default:
-                return <View openComponent={'error'} closeComponentProp={handelOpenComponent}/>    
+                return <View colorMode={colorMode.ScreenColorMode} openComponent={'error'} closeComponentProp={handelOpenComponent}/>    
         }}
     }
 
@@ -61,15 +61,15 @@ const Converter = (ScreenColorMode) => {
             <View style={styles.fixedMain}>
                 <ScrollView style={styles.scrConverter}>
                     <View style={styles.converters}>
-                        <FeatureBox svg={areaSvg} title={'Area'} currentComponent={(titleSet) => openCurrentComponent(titleSet)} />
-                        <FeatureBox svg={currencySvg} title={'Currency'} currentComponent={(titleSet) => openCurrentComponent(titleSet)} />
-                        <FeatureBox svg={internetDataSvg} title={'Data'} currentComponent={(titleSet) => openCurrentComponent(titleSet)} />
-                        <FeatureBox svg={discountSvg} title={'Discount'} currentComponent={(titleSet) => openCurrentComponent(titleSet)} />
-                        <FeatureBox svg={financeSvg} title={'Finance'} currentComponent={(titleSet) => openCurrentComponent(titleSet)} />
-                        <FeatureBox svg={lengthSvg} title={'Length'} currentComponent={(titleSet) => openCurrentComponent(titleSet)} />
-                        <FeatureBox svg={speedSvg} title={'Speed'} currentComponent={(titleSet) => openCurrentComponent(titleSet)} />
-                        <FeatureBox svg={temperatureSvg} title={'Temperature'} currentComponent={(titleSet) => openCurrentComponent(titleSet)} />
-                        <FeatureBox svg={timeSvg} title={'Time'} currentComponent={(titleSet) => openCurrentComponent(titleSet)} />
+                        <FeatureBox colorMode={colorMode.ScreenColorMode} svg={<AreaSvg strokeColor={colorMode.ScreenColorMode==='black'?'white':'black'}/>} title={'Area'} currentComponent={(titleSet) => openCurrentComponent(titleSet)} />
+                        <FeatureBox colorMode={colorMode.ScreenColorMode} svg={<CurrencySvg strokeColor={colorMode.ScreenColorMode==='black'?'white':'black'}/>} title={'Currency'} currentComponent={(titleSet) => openCurrentComponent(titleSet)} />
+                        <FeatureBox colorMode={colorMode.ScreenColorMode} svg={<InternetDataSvg strokeColor={colorMode.ScreenColorMode==='black'?'white':'black'}/>} title={'Data'} currentComponent={(titleSet) => openCurrentComponent(titleSet)} />
+                        <FeatureBox colorMode={colorMode.ScreenColorMode} svg={<DiscountSvg strokeColor={colorMode.ScreenColorMode==='black'?'white':'black'}/>} title={'Discount'} currentComponent={(titleSet) => openCurrentComponent(titleSet)} />
+                        <FeatureBox colorMode={colorMode.ScreenColorMode} svg={<FinanceSvg strokeColor={colorMode.ScreenColorMode==='black'?'white':'black'}/>} title={'Finance'} currentComponent={(titleSet) => openCurrentComponent(titleSet)} />
+                        <FeatureBox colorMode={colorMode.ScreenColorMode} svg={<LengthSvg strokeColor={colorMode.ScreenColorMode==='black'?'white':'black'}/>} title={'Length'} currentComponent={(titleSet) => openCurrentComponent(titleSet)} />
+                        <FeatureBox colorMode={colorMode.ScreenColorMode} svg={<SpeedSvg strokeColor={colorMode.ScreenColorMode==='black'?'white':'black'}/>} title={'Speed'} currentComponent={(titleSet) => openCurrentComponent(titleSet)} />
+                        <FeatureBox colorMode={colorMode.ScreenColorMode} svg={<TemperatureSvg strokeColor={colorMode.ScreenColorMode==='black'?'white':'black'}/>} title={'Temperature'} currentComponent={(titleSet) => openCurrentComponent(titleSet)} />
+                        <FeatureBox colorMode={colorMode.ScreenColorMode} svg={<TimeSvg strokeColor={colorMode.ScreenColorMode==='black'?'white':'black'}/>} title={'Time'} currentComponent={(titleSet) => openCurrentComponent(titleSet)} />
                     </View>
                 </ScrollView>
             </View>
@@ -92,19 +92,19 @@ const Converter = (ScreenColorMode) => {
     )
 }
 
-const FeatureBox = ({ svg, title, currentComponent }) => {
+const FeatureBox = ({colorMode, svg, title, currentComponent }) => {
 
     const UpdateThisComponent = (pageTitle) => {
         currentComponent(pageTitle);
     }
 
     return (
-        <TouchableOpacity style={styles.featureInter} onPress={() => { UpdateThisComponent(title) }}>
+        <TouchableOpacity style={[styles.featureInter , {backgroundColor: colorMode==='#f0f0f0'?'white':'#151515'}]} onPress={() => { UpdateThisComponent(title) }}>
             <View style={styles.svgBox}>
                 {svg}
             </View>
             <View style={styles.titleBox}>
-                <Text style={styles.titleText}>{title}</Text>
+                <Text style={[styles.titleText , {color:colorMode==='#f0f0f0'?'black':'white'}, {fontWeight:colorMode==='#f0f0f0'?'450':'100'} ]}>{title}</Text>
             </View>
         </TouchableOpacity>
     )
@@ -186,7 +186,6 @@ const styles = StyleSheet.create({
         height: '15%'
     },
     featureInter: {
-        backgroundColor: '#080808db',
         width: 135,
         height: 120,
         display: 'flex',
@@ -194,15 +193,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         gap: 5,
         borderRadius: 10
-    },
-    svgBox: {
-        // backgroundColor:'blue',
-        // width:'100%',
-        // height:'70%',
-    },
-    titleBox: {
-        // backgroundColor:'brown',
-
     },
     titleText: {
         fontSize: 18,
