@@ -3,7 +3,7 @@ import { SafeAreaView, View, Text, StyleSheet, TextInput, Alert, TouchableOpacit
 import { Vibration } from 'react-native';
 import Svg, { Path, Line, Circle } from 'react-native-svg';
 
-function Calculator() {
+function Calculator(ScreenColorMode) {
     const scrollViewRef = useRef();
     const [inputLog, setInputLog] = useState('');
     const [FinalOutput, setFinalOutput] = useState('');

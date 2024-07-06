@@ -1,12 +1,104 @@
 
 import React, { useEffect } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, BackHandler, Button, Alert, Image, Pressable } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, BackHandler, Button, Alert, Image,useColorScheme,StatusBar } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
 import Calculator from './components/Calculator';
 import Converter from './components/Converter';
 import { useState } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
+import {Appearance} from 'react-native';
 // import bg from './bg.avif'
+
+
+function App(): React.JSX.Element {
+  const [activeElement, setActiveElement] = useState('cal');
+  const [showAlert, setShowAlert] = useState(false);
+  const [themeScreen , setThemScreen] = useState('black');
+  const colorScheme = useColorScheme();
+
+
+  // console.log('Default Color Mode : ',Appearance.getColorScheme());
+
+  useEffect(()=>{
+    // const ColorMode = Appearance.getColorScheme();
+    console.log('color : ' , colorScheme);
+    if(colorScheme==='light'){
+      setThemScreen('white');
+    }else {
+      setThemScreen('black');
+    }
+  },[colorScheme]);
+
+
+
+  function Active(value: string) {
+    if (value !== activeElement) {
+      setActiveElement(value);
+    }
+  }
+
+  useEffect(() => {
+    const backAction = () => {
+      setShowAlert(true);
+      return true;
+    }
+
+    const handleOnBack = BackHandler.addEventListener(
+      'hardwareBackPress', backAction
+    );
+
+    return () => handleOnBack.remove();
+  }, []);
+
+  return (
+    <View style={[styles.main , {backgroundColor:themeScreen}]}>
+      <StatusBar 
+        backgroundColor={themeScreen}
+        barStyle={themeScreen==='black'?'light-content':'dark-content'}
+      />
+      {showAlert && (
+        <View style={styles.captureAll}>
+          <BlurView
+            style={styles.makeBlur}
+            blurAmount={15}
+          />
+          <View style={styles.alertBox}>
+            <View style={styles.alertTop}>
+              <View style={styles.alertTopArrange}>
+                <Image style={styles.exitImg} source={require('./img/DoExit.png')}></Image>
+              </View>
+            </View>
+            <LinearGradient colors={['#36296e','#41337e','#58489f','#6a5ca3']} style={styles.alertBottom}>
+              <View style={styles.heading}>
+                <Text style={styles.headingText}>Are You Sure You Want To Exit</Text>
+              </View>
+              <View style={styles.alertButtons}>
+                <TouchableOpacity style={styles.exitBtn} onPress={() => {BackHandler.exitApp() ; setShowAlert(false)} } >
+                  <Text style={styles.btnText}>Yes</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.stayBtn} onPress={() => setShowAlert(false)} >
+                  <Text style={styles.btnText2}>No</Text>
+                </TouchableOpacity>
+              </View>
+            </LinearGradient >
+          </View>
+        </View>
+      )}
+      <View style={styles.option}>
+        <TouchableOpacity onPress={() => Active('cal')} disabled={activeElement === 'cal'}>
+          <Text style={[styles.option_text, themeScreen==='black'?{ color: activeElement === 'cal' ? 'white' : 'gray' }:{ color: activeElement === 'cal' ? 'black' : 'gray' }]}>Calculator</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => Active('con')} disabled={activeElement === 'con'}>
+          <Text style={[styles.option_text, themeScreen==='black'?{ color: activeElement === 'con' ? 'white' : 'gray' }:{ color: activeElement === 'con' ? 'black' : 'gray' }]}>Converter</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.output}>
+        {activeElement === 'cal' ? <Calculator ScreenColorMode = {themeScreen} /> : <Converter ScreenColorMode = {themeScreen}/>}
+      </View>
+    </View>
+  );
+}
+
 
 const styles = StyleSheet.create({
   main: {
@@ -15,7 +107,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#000000',
   },
   option: {
     width: '100%',
@@ -36,7 +127,7 @@ const styles = StyleSheet.create({
     height: '96%'
   },
   active: {
-    color: 'white',
+    color: 'black',
   },
   captureAll: {
     zIndex: 1,
@@ -139,71 +230,5 @@ const styles = StyleSheet.create({
   }
 });
 
-function App(): React.JSX.Element {
-  const [activeElement, setActiveElement] = useState('cal');
-  const [showAlert, setShowAlert] = useState(false);
 
-  function Active(value: string) {
-    if (value !== activeElement) {
-      setActiveElement(value);
-    }
-  }
-
-  useEffect(() => {
-    const backAction = () => {
-      setShowAlert(true);
-      return true;
-    }
-
-    const handleOnBack = BackHandler.addEventListener(
-      'hardwareBackPress', backAction
-    );
-
-    return () => handleOnBack.remove();
-  }, []);
-
-  return (
-    <View style={styles.main}>
-      {showAlert && (
-        <View style={styles.captureAll}>
-          <BlurView
-            style={styles.makeBlur}
-            blurAmount={15}
-          />
-          <View style={styles.alertBox}>
-            <View style={styles.alertTop}>
-              <View style={styles.alertTopArrange}>
-                <Image style={styles.exitImg} source={require('./img/DoExit.png')}></Image>
-              </View>
-            </View>
-            <LinearGradient colors={['#36296e','#41337e','#58489f','#6a5ca3']} style={styles.alertBottom}>
-              <View style={styles.heading}>
-                <Text style={styles.headingText}>Are You Sure You Want To Exit</Text>
-              </View>
-              <View style={styles.alertButtons}>
-                <TouchableOpacity style={styles.exitBtn} onPress={() => {BackHandler.exitApp() ; setShowAlert(false)} } >
-                  <Text style={styles.btnText}>Yes</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.stayBtn} onPress={() => setShowAlert(false)} >
-                  <Text style={styles.btnText2}>No</Text>
-                </TouchableOpacity>
-              </View>
-            </LinearGradient >
-          </View>
-        </View>
-      )}
-      <View style={styles.option}>
-        <TouchableOpacity onPress={() => Active('cal')} disabled={activeElement === 'cal'}>
-          <Text style={[styles.option_text, { color: activeElement === 'cal' ? 'white' : 'gray' }]}>Calculator</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => Active('con')} disabled={activeElement === 'con'}>
-          <Text style={[styles.option_text, { color: activeElement === 'con' ? 'white' : 'gray' }]}>Converter</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.output}>
-        {activeElement === 'cal' ? <Calculator /> : <Converter />}
-      </View>
-    </View>
-  );
-}
 export default App;

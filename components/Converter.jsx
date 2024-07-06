@@ -13,7 +13,7 @@ import Time from "./Time/Time";
 import Inputs from "./Inputs/Inputs";
 // import { BlurView } from '@react-native-community/blur';
 
-const Converter = () => {
+const Converter = (ScreenColorMode) => {
     const [openComponent, setOpenComponent] = useState('close');
 
 
