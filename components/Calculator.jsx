@@ -191,6 +191,7 @@ function Calculator(colorMode) {
     },[FinalOutput])
 
     const isEqualTo = ()=>{
+        Vibration.vibrate(10);
         setInputLog(FinalOutput);
     }    
 
@@ -456,7 +457,7 @@ const styles = StyleSheet.create({
     cal_btn: {
         width: '23%',
         height: '100%',
-        backgroundColor: '#939393',
+        // backgroundColor: '#939393',
         borderRadius: 20,
         display: 'flex',
         justifyContent: 'center',
@@ -526,7 +527,7 @@ const styles = StyleSheet.create({
 
 const DarkStyles = StyleSheet.create({
     cal_btn_T1:{
-        // backgroundColor:'#171717',
+        backgroundColor:'#939393',
     },
     cal_btn_T2:{
         // backgroundColor:'blue',

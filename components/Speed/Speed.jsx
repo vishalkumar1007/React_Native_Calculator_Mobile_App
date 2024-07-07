@@ -2,7 +2,7 @@ import {View,Text,StyleSheet,TouchableOpacity} from 'react-native';
 import {useState,useEffect} from 'react';
 import Inputs from '../Inputs/Inputs';
 
-const Speed = ({openComponent,closeComponentProp})=>{
+const Speed = ({colorMode,openComponent,closeComponentProp})=>{
     const [closeComponent, setCloseComponent] = useState('');
     const [userInputLog, setUserInputLog] = useState('');
     const [inputCalculatedValue, setInputCalculatedValue] = useState('');
@@ -36,7 +36,7 @@ const Speed = ({openComponent,closeComponentProp})=>{
 
             </View>
             <View style={styles.speedBottom}>
-                <Inputs UserInputLog={GetInputLog} CalculatedLog={GetCalculatedValue} disableBtnNumber={['3']}/>
+                <Inputs colorMode ={colorMode} UserInputLog={GetInputLog} CalculatedLog={GetCalculatedValue} disableBtnNumber={['3']}/>
             </View>
         </View>
     )
