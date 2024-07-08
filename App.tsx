@@ -64,6 +64,10 @@ function App(): React.JSX.Element {
             style={styles.makeBlur}
             blurAmount={15}
           />
+          <StatusBar 
+            backgroundColor={themeScreen==='black'?'#000000c2':'#ffffff24'}
+            barStyle='light-content'
+          />
           <View style={styles.alertBox}>
             <View style={styles.alertTop}>
               <View style={styles.alertTopArrange}>

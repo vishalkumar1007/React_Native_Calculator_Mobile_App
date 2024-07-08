@@ -1,6 +1,7 @@
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Modal } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Modal, Pressable } from "react-native";
 import { CurrencySvg, LengthSvg, SpeedSvg, TimeSvg, FinanceSvg, InternetDataSvg, DiscountSvg, TemperatureSvg, AreaSvg } from "./svg";
 import { useEffect, useState } from 'react';
+import { WebView } from 'react-native-webview';
 import Area from "./Area/Area";
 import Currency from "./Currency/Currency";
 import Data from "./Data/Data";
@@ -11,10 +12,12 @@ import Speed from "./Speed/Speed";
 import Temperature from "./Temperature/Temperature";
 import Time from "./Time/Time";
 import Inputs from "./Inputs/Inputs";
+import Svg, { Path, Line, Circle, PolyLine } from 'react-native-svg';
 // import { BlurView } from '@react-native-community/blur';
 
 const Converter = (colorMode) => {
     const [openComponent, setOpenComponent] = useState('close');
+    const [openSite ,  setOpenSite] = useState(false);
 
 
     useEffect(() => {
@@ -55,7 +58,9 @@ const Converter = (colorMode) => {
                 return <View colorMode={colorMode.ScreenColorMode} openComponent={'error'} closeComponentProp={handelOpenComponent}/>    
         }}
     }
-
+    // const MyWebComponent = () => {
+    //     return <WebView source={{ uri: 'https://vishalkumar07.me' }} />;
+    // }
     return (
         <View style={styles.main}>
             <View style={styles.fixedMain}>
@@ -72,6 +77,20 @@ const Converter = (colorMode) => {
                         <FeatureBox colorMode={colorMode.ScreenColorMode} svg={<TimeSvg strokeColor={colorMode.ScreenColorMode==='black'?'white':'black'}/>} title={'Time'} currentComponent={(titleSet) => openCurrentComponent(titleSet)} />
                     </View>
                 </ScrollView>
+                <View style={styles.mysite}>
+                    <TouchableOpacity onPress={()=>{setOpenSite(true)}}><Text style={{color:colorMode.ScreenColorMode==='black'?'#7c7c7c':'#181818' , fontSize:12}}>&#169; Made With 💗 Vishal</Text></TouchableOpacity>
+                    <Modal
+                        animationType="slide"
+                        transparent={false}
+                        visible={openSite}
+                        style={styles.modalMain}
+                        onRequestClose={() => {
+                            setOpenSite(false)
+                        }}
+                    >
+                        <WebView source={{ uri: 'https://vishalkumar07.me' }} style={{ flex: 1 , zIndex:15 }} />
+                    </Modal>
+                </View>
             </View>
             <Modal
                 animationType="none"
@@ -99,7 +118,7 @@ const FeatureBox = ({colorMode, svg, title, currentComponent }) => {
     }
 
     return (
-        <TouchableOpacity style={[styles.featureInter , {backgroundColor: colorMode==='#f0f0f0'?'white':'#151515'}]} onPress={() => { UpdateThisComponent(title) }}>
+        <TouchableOpacity style={[styles.featureInter , {backgroundColor: colorMode==='#f0f0f0'?'white':'#101010d6'}]} onPress={() => { UpdateThisComponent(title) }}>
             <View style={styles.svgBox}>
                 {svg}
             </View>
@@ -170,11 +189,19 @@ const styles = StyleSheet.create({
         height: '100%',
 
     },
+    mysite:{
+        // backgroundColor:'blue',
+        width:'100%',
+        height:'5%',
+        display:'flex',
+        justifyContent:'center',
+        alignItems:'center'
+    },
     converters: {
         // backgroundColor:'red',
         display: 'flex',
         rowGap: 25,
-        columnGap: 15,
+        // columnGap: 15,
         flexDirection: 'row',
         flexWrap: 'wrap',
         alignItems: 'center',
@@ -186,7 +213,7 @@ const styles = StyleSheet.create({
         height: '15%'
     },
     featureInter: {
-        width: 135,
+        width: 130,
         height: 120,
         display: 'flex',
         justifyContent: 'center',

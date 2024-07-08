@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity,StatusBar } from 'react-native';
 import { useState, useEffect } from 'react';
 import Inputs from '../Inputs/Inputs';
+import Svg, { Path, Line, Circle, PolyLine } from 'react-native-svg';
 // import changeNavigationBarColor from 'react-native-navigation-bar-color';
 
 const Area = ({colorMode, openComponent, closeComponentProp }) => {
@@ -23,7 +24,7 @@ const Area = ({colorMode, openComponent, closeComponentProp }) => {
     useEffect(()=>{
         console.log('Area : ',colorMode);
     },[colorMode])
-
+    
 
     return (
         <View style={[styles.main ,  {backgroundColor: colorMode==='black'?'black':'#f0f0f0'}]}>
@@ -32,15 +33,50 @@ const Area = ({colorMode, openComponent, closeComponentProp }) => {
                 barStyle={colorMode==='#f0f0f0'?'dark-content':'light-content'}
             />
             <View style={styles.areaTop}>
-                <Text style={[styles.modalText, {color: colorMode==='black'?'#f0f0f0':'black'}]}>{closeComponent}</Text>
-                <TouchableOpacity style={styles.btnClose} onPress={() => { closeComponentProp('close') }}>
-                    <Text style={[styles.btnText ]}>Back</Text>
-                </TouchableOpacity>
+                <View style={styles.areaInputMain}>
+                    <View style={styles.areaInputHead}>
+                        <TouchableOpacity style={styles.InputHeadLeft} onPress={() => { closeComponentProp('close') }}>
+                            <Svg 
+                                xmlns="http://www.w3.org/2000/svg" 
+                                width="24" 
+                                height="24" 
+                                viewBox="0 0 24 24" 
+                                fill="none" 
+                                stroke={colorMode==='black'?'#e8e8e8':'#171717'} 
+                                strokeWidth="2" 
+                                strokeLinecap="round" 
+                                strokeLinejoin="round" 
+                                class="lucide lucide-move-left"
+                            >
+                                <Path d="M6 8L2 12L6 16"/>
+                                <Path d="M2 12H22"/>
+                            </Svg>
+                        </TouchableOpacity>
+                        <View style={styles.InputHeadRight}>
+                            <Text style={[styles.InputHeadRightText , {color:colorMode==='black'?'#e8e8e8':'#171717'}] }>{closeComponent}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.areaInputContainer}>
+                        <View style={styles.areaInputTop}>
+                        {/* <Select name="selectedFruit">
+                            <Option value="apple">Apple</Option>
+                            <Option value="banana">Banana</Option>
+                            <Option value="orange">Orange</Option>
+                        </Select> */}
+                        </View>
+                        <View style = {styles.areaInputBottom}></View>
+                    </View>
+                </View>
             </View>
             <View style={styles.areaBottom}>
                 <Inputs colorMode={colorMode} UserInputLog={GetInputLog} CalculatedLog={GetCalculatedValue} disableBtnNumber={['3']}/>
             </View>
         </View>
+    
+        // <Text style={[styles.modalText, {color: colorMode==='black'?'#f0f0f0':'black'}]}>{closeComponent}</Text>
+        // <TouchableOpacity style={styles.btnClose} onPress={() => { closeComponentProp('close') }}>
+        // <Text style={[styles.btnText ]}>Back</Text>
+        // </TouchableOpacity>
     )
 }
 const styles = StyleSheet.create({
@@ -57,7 +93,7 @@ const styles = StyleSheet.create({
         width:'100%',
         height:'55%',
         display:'flex',
-        justifyContent:'center',
+        justifyContent:'top',
         alignItems:'center',    
     },
     areaBottom:{
@@ -86,5 +122,63 @@ const styles = StyleSheet.create({
     btnText: {
         color: '#ff0000db',
     },
+    areaInputMain:{
+        // backgroundColor:'white',
+        width:'95%',
+        height:'36%',
+        display:'flex',
+        justifyContent:'flex-end',
+        justifyContent:'space-between'
+    },
+    areaInputHead:{
+        // backgroundColor:'orange',
+        width:'100%',
+        height:'25%',
+        display:'flex',
+        flexDirection:'row',
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    areaInputContainer:{
+        // backgroundColor:'pink',
+        width:'100%',
+        height:'72%',
+        display:'flex',
+        justifyContent:'space-between'
+    },
+    areaInputTop:{
+        // backgroundColor:'green',
+        width:'100%',
+        height:'40%'
+    },
+    areaInputBottom:{
+        // backgroundColor:'blue',
+        width:'100%',
+        height:'40%'
+    },
+    InputHeadLeft:{
+        height:'100%',
+        // backgroundColor:'gray',
+        position:'absolute',
+        left:10,
+        display:'flex',
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    InputHeadLeftText:{
+        fontSize:15
+    },
+    InputHeadRight:{
+        height:'100%',
+        // backgroundColor:'purple',
+        display:'flex',
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    InputHeadRightText:{
+        fontSize:20,
+        fontWeight:`500`
+    }
 })
 export default Area;
+
