@@ -3,9 +3,20 @@ import { SafeAreaView, View, Text, TextInput, Alert, TouchableOpacity , StyleShe
 import { Vibration } from 'react-native';
 import Svg, { Path, Line, Circle } from 'react-native-svg';
 
-const Inputs = ({colorMode,UserInputLog,CalculatedLog,disableBtnNumber}) => {
+const Inputs = ({previousValue,colorMode,UserInputLog,CalculatedLog,disableBtnNumber}) => {
     const [inputLog, setInputLog] = useState('');
     const [userInputCalculation , setUserInputCalculation] = useState('');
+        
+    useEffect(()=>{
+        setInputLog(previousValue);
+        // console.log('................................INPUT........');
+        // console.log('previousValue : ',previousValue);
+    },[previousValue])
+    
+    // useEffect(()=>{
+    //     console.log('inputLog : ',inputLog)
+    //     console.log('userInputCalculation : ',userInputCalculation)
+    // },[inputLog,userInputCalculation]);
 
     const Calculate = () => {
         let loopLimit = 1000;
@@ -176,6 +187,9 @@ const Inputs = ({colorMode,UserInputLog,CalculatedLog,disableBtnNumber}) => {
             newCopyInputLog = newCopyInputLog.substring(0, newCopyInputLog.length - 1);
         }
 
+        // if(['0'].includes(newCopyInputLog[0])){
+        //     newCopyInputLog = newCopyInputLog.substring(0,1);
+        // }
         setUserInputCalculation(newCopyInputLog==='NaN'?'Error':newCopyInputLog);
     };
 
@@ -222,9 +236,13 @@ const Inputs = ({colorMode,UserInputLog,CalculatedLog,disableBtnNumber}) => {
             }
 
         } else {
-            let input = inputLog;
-            input += value;
-            setInputLog(input);
+            if(inputLog.length===1 && inputLog[0]==='0'){
+                setInputLog(value);
+            }else{
+                let input = inputLog;
+                input += value;
+                setInputLog(input);
+            }
         }
     }
 
@@ -236,7 +254,7 @@ const Inputs = ({colorMode,UserInputLog,CalculatedLog,disableBtnNumber}) => {
                 HandelCommonInput(value);
             }
         } else if (['﹪', '+', '-', '÷', '×', '.'].includes(value) && inputLog.length === 0) {
-            setInputLog(`0${value}`);
+            setInputLog(`${value}`);
         } else {
             HandelCommonInput(value);
         }

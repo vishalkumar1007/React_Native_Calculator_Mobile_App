@@ -1,33 +1,59 @@
 import { View, Text, StyleSheet, TouchableOpacity, StatusBar, ScrollView, SafeAreaView, Modal, Pressable } from 'react-native';
 import { useState, useEffect, useReducer, useRef } from 'react';
 import Inputs from '../Inputs/Inputs';
-import Svg, { Path, Line, Circle, PolyLine } from 'react-native-svg';
-
-
-
+import Svg, { Path} from 'react-native-svg';
 
 const Area = ({ colorMode, openComponent, closeComponentProp }) => {
     const dropValue1Ref = useRef(null);
-    const [closeComponent, setCloseComponent] = useState('');
-    const [userInputLog, setUserInputLog] = useState('');
-    const [inputCalculatedValue, setInputCalculatedValue] = useState('');
+    const dropValue2Ref = useRef(null);
+    const [closeComponent, setCloseComponent] = useState('0');
+    // .....................
+    const [userInputLog_1, setUserInputLog_1] = useState('');
+    const [inputCalculatedValue_1, setInputCalculatedValue_1] = useState('');
     const [drop1Value, setDrop1Value] = useState('Kilometer');
     const [drop1ValueUnit, setDrop1ValueUnit] = useState('km');
     const [drop1Close, setDrop1Close] = useState(false);
     const [Layout1leftWidth, setlayout1leftWidth] = useState(0);
     const [Layout1MainWidth, setlayout1MainWidth] = useState(0);
+    // .....................
+    const [drop2Value , setDrop2Value] = useState('Kilometer')
+    const [drop2ValueUnit , setDrop2ValueUnit] = useState('km')
+    const [drop2Close, setDrop2Close] = useState(false);
+    const [Layout2leftWidth, setlayout2leftWidth] = useState(0);
+    const [Layout2MainWidth, setlayout2MainWidth] = useState(0);
+    const [userInputLog_2, setUserInputLog_2] = useState('');
+    const [inputCalculatedValue_2, setInputCalculatedValue_2] = useState('');
+    // ......................
+    const [isActive , setIsActive] = useState(true);
+    
+
+    // useEffect(() => {
+    //     console.log('..................................AREA.......')
+    //     console.log('userInputLog_1 : ', userInputLog_1)
+    //     console.log('inputCalculatedValue_1 : ', inputCalculatedValue_1)
+    //     console.log('userInputLog_2 : ', userInputLog_2)
+    //     console.log('inputCalculatedValue_2 : ', inputCalculatedValue_2)
+    // }, [userInputLog_1,inputCalculatedValue_1,userInputLog_2,inputCalculatedValue_2])
 
 
     useEffect(() => {
-        setCloseComponent(openComponent)
+        setCloseComponent(openComponent);
     }, [openComponent]);
 
-    const GetInputLog = (logData) => {
-        setUserInputLog(logData);
+    const GetInput1Log = (logData) => {
+        setUserInputLog_1(logData);
     }
 
-    const GetCalculatedValue = (calcData) => {
-        setInputCalculatedValue(calcData);
+    const GetCalculated1Value = (calcData) => {
+        setInputCalculatedValue_1(calcData);
+    }
+
+    const GetInput2Log = (logData) => {
+        setUserInputLog_2(logData);
+    }
+
+    const GetCalculated2Value = (calcData) => {
+        setInputCalculatedValue_2(calcData);
     }
 
     // useEffect(() => {
@@ -41,17 +67,26 @@ const Area = ({ colorMode, openComponent, closeComponentProp }) => {
         // console.log('Value : ', valueUnit);
         setDrop1Close(false);
     }
-
-    useEffect(() => {
-        console.log('drop1Value : ', drop1Value)
-    }, [drop1Value])
+    const SetAndCloseDrop2 = (value , valueUnit)=>{
+        setDrop2Value(value);
+        setDrop2ValueUnit(valueUnit)
+        // console.log('Value : ', value);
+        // console.log('Value : ', valueUnit);
+        setDrop2Close(false);
+    }
 
     // Handel Scroll Animation
     useEffect(() => {
         if (dropValue1Ref.current) {
             dropValue1Ref.current.scrollToEnd({ animated: true });
         }
-    }, [userInputLog]);
+    }, [userInputLog_1]);
+
+    useEffect(() => {
+        if (dropValue2Ref.current) {
+            dropValue2Ref.current.scrollToEnd({ animated: true });
+        }
+    }, [userInputLog_2]);
 
     // useEffect(() => {
     //     console.log('.............')
@@ -67,8 +102,17 @@ const Area = ({ colorMode, openComponent, closeComponentProp }) => {
         const { width } = event.nativeEvent.layout;
         setlayout1MainWidth(width);
     }
+    const onLayout2left = (event) => {
+        const { width } = event.nativeEvent.layout;
+        setlayout2leftWidth(width);
+    }
+    const onLayout2Main = (event) => {
+        const { width } = event.nativeEvent.layout;
+        setlayout2MainWidth(width);
+    }
 
     const AreaData = [['Kilometer', 'km'], ['Meter', 'm'], ['Decimeter', 'dm'], ['Centimeter', 'cm'], ['Millimeter', 'mm'], ['Micrometer', 'μm'], ['Nanometer', 'nm'], ['Picometer', 'pm'], ['Nautrical mile', 'nmi'], ['Mile', 'mi'], ['Furlong', 'fur'], ['Fathom', 'ftm'], ['Yard', 'yd'], ['Foot', 'ft'], ['Inch', 'in'], ['Lunar distance', 'ld'], ['Astronomical unit', '☉'], ['Light year', 'ly']]
+    const Area2Data = [['Kilometer', 'km'], ['Meter', 'm'], ['Decimeter', 'dm'], ['Centimeter', 'cm'], ['Millimeter', 'mm'], ['Micrometer', 'μm'], ['Nanometer', 'nm'], ['Picometer', 'pm'], ['Nautrical mile', 'nmi'], ['Mile', 'mi'], ['Furlong', 'fur'], ['Fathom', 'ftm'], ['Yard', 'yd'], ['Foot', 'ft'], ['Inch', 'in'], ['Lunar distance', 'ld'], ['Astronomical unit', '☉'], ['Light year', 'ly']]
 
     return (
         <SafeAreaView style={[styles.main, { backgroundColor: colorMode === 'black' ? 'black' : '#f0f0f0' }]}>
@@ -110,9 +154,9 @@ const Area = ({ colorMode, openComponent, closeComponentProp }) => {
                                 </View>
                                 <View style={[styles.input1main, { maxWidth: Layout1MainWidth - Layout1leftWidth }]}>
                                     <ScrollView ref={dropValue1Ref} contentContainerStyle={styles.input1scroll} horizontal={true} >
-                                        <Pressable style={styles.input1touch}>
+                                        <Pressable style={styles.input1touch} onPress={()=>{setIsActive(true)}}>
                                             <View style={styles.InputSectionOneMain}>
-                                                <Text style={styles.InputSectionOneMainInput}>{userInputLog}</Text>
+                                                <Text style={[styles.InputSectionOneMainInput , {color: isActive==true?'#ff9400':'gray'}]}>{inputCalculatedValue_1===''?'0':inputCalculatedValue_1}</Text>
                                             </View>
                                         </Pressable>
                                     </ScrollView>
@@ -141,37 +185,37 @@ const Area = ({ colorMode, openComponent, closeComponentProp }) => {
                             </Modal>
                         </View>
                         <View style={styles.areaInputBottom}>
-                            <View style={styles.dropDownParent} onLayout={onLayout1Main}>
-                                <View style={styles.dropDownMain} onLayout={onLayout1left}>
-                                    <Text style={styles.dropDownText}>{drop1Value}</Text>
-                                    <Text style={styles.dropDownTextUnit}>{drop1ValueUnit}</Text>
-                                    <TouchableOpacity style={styles.dropDownOpen} onPress={() => { setDrop1Close(true) }}><Text style={styles.dropDownOpenText}>&#8597;</Text></TouchableOpacity>
+                            <View style={styles.dropDownParent} onLayout={onLayout2Main}>
+                                <View style={styles.dropDownMain} onLayout={onLayout2left}>
+                                    <Text style={styles.dropDownText}>{drop2Value}</Text>
+                                    <Text style={styles.dropDownTextUnit}>{drop2ValueUnit}</Text>
+                                    <TouchableOpacity style={styles.dropDownOpen} onPress={() => { setDrop2Close(true) }}><Text style={styles.dropDownOpenText}>&#8597;</Text></TouchableOpacity>
                                 </View>
-                                {/* <View style={[styles.input1main, { maxWidth: Layout1MainWidth - Layout1leftWidth }]}>
-                                    <ScrollView ref={dropValue1Ref} contentContainerStyle={styles.input1scroll} horizontal={true} >
-                                        <Pressable style={styles.input1touch}>
+                                <View style={[styles.input1main, { maxWidth: Layout2MainWidth - Layout2leftWidth }]}>
+                                    <ScrollView ref={dropValue2Ref} contentContainerStyle={styles.input1scroll} horizontal={true} >
+                                        <Pressable style={styles.input1touch} onPress={()=>{setIsActive(false)}}>
                                             <View style={styles.InputSectionOneMain}>
-                                                <Text style={styles.InputSectionOneMainInput}>{userInputLog}</Text>
+                                                <Text style={[styles.InputSectionOneMainInput , {color: isActive==false?'#ff9400':'gray'}]}>{inputCalculatedValue_2===''?'0':inputCalculatedValue_2}</Text>
                                             </View>
                                         </Pressable>
                                     </ScrollView>
-                                </View> */}
+                                </View>
                             </View>
                             <Modal
                                 animationType='fade'
                                 transparent={true}
-                                visible={drop1Close}
+                                visible={drop2Close}
                                 onRequestClose={() => {
-                                    setDrop1Close(false);
+                                    setDrop2Close(false);
                                 }}
                             >
-                                <View style={styles.topScrollDropDown} >
+                                <View style={styles.topScrollDropDown2} >
                                     <ScrollView style={styles.topDroDownScrollView}>
                                         <View style={styles.droDownTopPosition}>
-                                            {Array.from({ length: AreaData.length }, (_, index) => (
-                                                <TouchableOpacity key={index} style={[styles.dtp_btn, { backgroundColor: AreaData[index][0] === drop1Value ? '#ff990038' : '' }]} onPress={() => { SetAndCloseDrop1(AreaData[index][0], AreaData[index][1]) }}>
-                                                    <Text style={[styles.droDownTopPositionText, { color: AreaData[index][0] === drop1Value ? '#ffa012' : '' }]}>{AreaData[index][0]}</Text>
-                                                    <Text style={[styles.droDownTopPositionTextUnit, { color: AreaData[index][0] === drop1Value ? '#ffa012' : 'gray' }]}>{AreaData[index][1]}</Text>
+                                            {Array.from({ length: Area2Data.length }, (_, index) => (
+                                                <TouchableOpacity key={index} style={[styles.dtp_btn, { backgroundColor: Area2Data[index][0] === drop2Value ? '#ff990038' : '' }]} onPress={() => { SetAndCloseDrop2(Area2Data[index][0], Area2Data[index][1]) }}>
+                                                    <Text style={[styles.droDownTopPositionText, { color: Area2Data[index][0] === drop2Value ? '#ffa012' : '' }]}>{Area2Data[index][0]}</Text>
+                                                    <Text style={[styles.droDownTopPositionTextUnit, { color: Area2Data[index][0] === drop2Value ? '#ffa012' : 'gray' }]}>{Area2Data[index][1]}</Text>
                                                 </TouchableOpacity>
                                             ))}
                                         </View>
@@ -184,7 +228,13 @@ const Area = ({ colorMode, openComponent, closeComponentProp }) => {
                 </View>
             </View>
             <View style={styles.areaBottom}>
-                <Inputs colorMode={colorMode} UserInputLog={GetInputLog} CalculatedLog={GetCalculatedValue} disableBtnNumber={['3']} />
+                {
+                    isActive?
+                    <Inputs  previousValue={userInputLog_1} colorMode={colorMode} UserInputLog={GetInput1Log} CalculatedLog={GetCalculated1Value} disableBtnNumber={['3']} />
+                    :
+                    <Inputs previousValue={userInputLog_2} colorMode={colorMode} UserInputLog={GetInput2Log} CalculatedLog={GetCalculated2Value} disableBtnNumber={['3']} />
+                    
+                }
             </View>
         </SafeAreaView>
     )
@@ -339,8 +389,21 @@ const styles = StyleSheet.create({
         maxHeight: 350,
         padding: 2,
         borderRadius: 12,
-        // maxWidth:'50%',
-        overflow:'hidden'
+        overflow:'hidden',
+        elevation:10,
+        shadowColor:'black'
+    },
+    topScrollDropDown2:{
+        position: 'absolute',
+        backgroundColor: '#202020',
+        top: 200,
+        left: 60,
+        maxHeight: 350,
+        padding: 2,
+        borderRadius: 12,
+        overflow:'hidden',
+        elevation:10,
+        shadowColor:'black'
     },
     topDroDownScrollView: {
         width: '100%',
