@@ -10,14 +10,14 @@ const Temperature = ({ colorMode, openComponent, closeComponentProp }) => {
     // .....................
     const [userInputLog_1, setUserInputLog_1] = useState('');
     const [inputCalculatedValue_1, setInputCalculatedValue_1] = useState('');
-    const [drop1Value, setDrop1Value] = useState('Kilometer');
-    const [drop1ValueUnit, setDrop1ValueUnit] = useState('km');
+    const [drop1Value, setDrop1Value] = useState('Year');
+    const [drop1ValueUnit, setDrop1ValueUnit] = useState('yr');
     const [drop1Close, setDrop1Close] = useState(false);
     const [Layout1leftWidth, setlayout1leftWidth] = useState(0);
     const [Layout1MainWidth, setlayout1MainWidth] = useState(0);
     // .....................
-    const [drop2Value , setDrop2Value] = useState('Kilometer')
-    const [drop2ValueUnit , setDrop2ValueUnit] = useState('km')
+    const [drop2Value , setDrop2Value] = useState('Year')
+    const [drop2ValueUnit , setDrop2ValueUnit] = useState('yr')
     const [drop2Close, setDrop2Close] = useState(false);
     const [Layout2leftWidth, setlayout2leftWidth] = useState(0);
     const [Layout2MainWidth, setlayout2MainWidth] = useState(0);
@@ -111,8 +111,8 @@ const Temperature = ({ colorMode, openComponent, closeComponentProp }) => {
         setlayout2MainWidth(width);
     }
 
-    const AreaData = [['Kilometer', 'km'], ['Meter', 'm'], ['Decimeter', 'dm'], ['Centimeter', 'cm'], ['Millimeter', 'mm'], ['Micrometer', 'μm'], ['Nanometer', 'nm'], ['Picometer', 'pm'], ['Nautrical mile', 'nmi'], ['Mile', 'mi'], ['Furlong', 'fur'], ['Fathom', 'ftm'], ['Yard', 'yd'], ['Foot', 'ft'], ['Inch', 'in'], ['Lunar distance', 'ld'], ['Astronomical unit', '☉'], ['Light year', 'ly']]
-    const Area2Data = [['Kilometer', 'km'], ['Meter', 'm'], ['Decimeter', 'dm'], ['Centimeter', 'cm'], ['Millimeter', 'mm'], ['Micrometer', 'μm'], ['Nanometer', 'nm'], ['Picometer', 'pm'], ['Nautrical mile', 'nmi'], ['Mile', 'mi'], ['Furlong', 'fur'], ['Fathom', 'ftm'], ['Yard', 'yd'], ['Foot', 'ft'], ['Inch', 'in'], ['Lunar distance', 'ld'], ['Astronomical unit', '☉'], ['Light year', 'ly']]
+    const AreaData = [['Year', 'yr'], ['Week', 'wk'], ['Day', 'd'], ['Hour', 'hr'], ['Minute', 'min'], ['Second', 's'], ['Millisecond', 'ms'], ['Microsecond', 'μs'], ['Picosecond', 'ps']]
+    const Area2Data = [['Year', 'yr'], ['Week', 'wk'], ['Day', 'd'], ['Hour', 'hr'], ['Minute', 'min'], ['Second', 's'], ['Millisecond', 'ms'], ['Microsecond', 'μs'], ['Picosecond', 'ps']]
 
     return (
         <SafeAreaView style={[styles.main, { backgroundColor: colorMode === 'black' ? 'black' : '#f0f0f0' }]}>
@@ -148,9 +148,9 @@ const Temperature = ({ colorMode, openComponent, closeComponentProp }) => {
                         <View style={styles.areaInputTop}>
                             <View style={styles.dropDownParent} onLayout={onLayout1Main}>
                                 <View style={styles.dropDownMain} onLayout={onLayout1left}>
-                                    <Text style={styles.dropDownText}>{drop1Value}</Text>
-                                    <Text style={styles.dropDownTextUnit}>{drop1ValueUnit}</Text>
-                                    <TouchableOpacity style={styles.dropDownOpen} onPress={() => { setDrop1Close(true) }}><Text style={styles.dropDownOpenText}>&#8597;</Text></TouchableOpacity>
+                                    <Text style={[styles.dropDownText , {color:colorMode==='black'?'#c0c0c0':'#464646'}]}>{drop1Value}</Text>
+                                    <Text style={[styles.dropDownTextUnit ]}>{drop1ValueUnit}</Text>
+                                    <TouchableOpacity style={styles.dropDownOpen} onPress={() => { setDrop1Close(true) }}><Text style={[styles.dropDownOpenText, {color:colorMode==='black'?'#a9a9a9':'#4b4b4b'}]}>&#8597;</Text></TouchableOpacity>
                                 </View>
                                 <View style={[styles.input1main, { maxWidth: Layout1MainWidth - Layout1leftWidth }]}>
                                     <ScrollView ref={dropValue1Ref} contentContainerStyle={styles.input1scroll} horizontal={true} >
@@ -175,7 +175,7 @@ const Temperature = ({ colorMode, openComponent, closeComponentProp }) => {
                                         <View style={styles.droDownTopPosition}>
                                             {Array.from({ length: AreaData.length }, (_, index) => (
                                                 <TouchableOpacity key={index} style={[styles.dtp_btn, { backgroundColor: AreaData[index][0] === drop1Value ? '#ff990038' : '' }]} onPress={() => { SetAndCloseDrop1(AreaData[index][0], AreaData[index][1]) }}>
-                                                    <Text style={[styles.droDownTopPositionText, { color: AreaData[index][0] === drop1Value ? '#ffa012' : '' }]}>{AreaData[index][0]}</Text>
+                                                    <Text style={[styles.droDownTopPositionText, { color: AreaData[index][0] === drop1Value ? '#ffa012' : '#cecece' }]}>{AreaData[index][0]}</Text>
                                                     <Text style={[styles.droDownTopPositionTextUnit, { color: AreaData[index][0] === drop1Value ? '#ffa012' : 'gray' }]}>{AreaData[index][1]}</Text>
                                                 </TouchableOpacity>
                                             ))}
@@ -187,9 +187,9 @@ const Temperature = ({ colorMode, openComponent, closeComponentProp }) => {
                         <View style={styles.areaInputBottom}>
                             <View style={styles.dropDownParent} onLayout={onLayout2Main}>
                                 <View style={styles.dropDownMain} onLayout={onLayout2left}>
-                                    <Text style={styles.dropDownText}>{drop2Value}</Text>
+                                    <Text style={[styles.dropDownText, {color:colorMode==='black'?'#c0c0c0':'#464646'}]}>{drop2Value}</Text>
                                     <Text style={styles.dropDownTextUnit}>{drop2ValueUnit}</Text>
-                                    <TouchableOpacity style={styles.dropDownOpen} onPress={() => { setDrop2Close(true) }}><Text style={styles.dropDownOpenText}>&#8597;</Text></TouchableOpacity>
+                                    <TouchableOpacity style={styles.dropDownOpen} onPress={() => { setDrop2Close(true) }}><Text style={[styles.dropDownOpenText , {color:colorMode==='black'?'#a9a9a9':'#4b4b4b'}]}>&#8597;</Text></TouchableOpacity>
                                 </View>
                                 <View style={[styles.input1main, { maxWidth: Layout2MainWidth - Layout2leftWidth }]}>
                                     <ScrollView ref={dropValue2Ref} contentContainerStyle={styles.input1scroll} horizontal={true} >
@@ -214,7 +214,7 @@ const Temperature = ({ colorMode, openComponent, closeComponentProp }) => {
                                         <View style={styles.droDownTopPosition}>
                                             {Array.from({ length: Area2Data.length }, (_, index) => (
                                                 <TouchableOpacity key={index} style={[styles.dtp_btn, { backgroundColor: Area2Data[index][0] === drop2Value ? '#ff990038' : '' }]} onPress={() => { SetAndCloseDrop2(Area2Data[index][0], Area2Data[index][1]) }}>
-                                                    <Text style={[styles.droDownTopPositionText, { color: Area2Data[index][0] === drop2Value ? '#ffa012' : '' }]}>{Area2Data[index][0]}</Text>
+                                                    <Text style={[styles.droDownTopPositionText, { color: Area2Data[index][0] === drop2Value ? '#ffa012' : '#cecece' }]}>{Area2Data[index][0]}</Text>
                                                     <Text style={[styles.droDownTopPositionTextUnit, { color: Area2Data[index][0] === drop2Value ? '#ffa012' : 'gray' }]}>{Area2Data[index][1]}</Text>
                                                 </TouchableOpacity>
                                             ))}
@@ -230,9 +230,9 @@ const Temperature = ({ colorMode, openComponent, closeComponentProp }) => {
             <View style={styles.areaBottom}>
                 {
                     isActive?
-                    <Inputs  previousValue={userInputLog_1} colorMode={colorMode} UserInputLog={GetInput1Log} CalculatedLog={GetCalculated1Value} disableBtnNumber={['3']} />
+                    <Inputs  previousValue={inputCalculatedValue_1} colorMode={colorMode} UserInputLog={GetInput1Log} CalculatedLog={GetCalculated1Value} disableBtnNumber={['3']} />
                     :
-                    <Inputs previousValue={userInputLog_2} colorMode={colorMode} UserInputLog={GetInput2Log} CalculatedLog={GetCalculated2Value} disableBtnNumber={['3']} />
+                    <Inputs previousValue={inputCalculatedValue_2} colorMode={colorMode} UserInputLog={GetInput2Log} CalculatedLog={GetCalculated2Value} disableBtnNumber={['3']} />
                     
                 }
             </View>
