@@ -58,9 +58,7 @@ const Converter = (colorMode) => {
                 return <View colorMode={colorMode.ScreenColorMode} openComponent={'error'} closeComponentProp={handelOpenComponent}/>    
         }}
     }
-    // const MyWebComponent = () => {
-    //     return <WebView source={{ uri: 'https://vishalkumar07.me' }} />;
-    // }
+
     return (
         <View style={styles.main}>
             <View style={styles.fixedMain}>
