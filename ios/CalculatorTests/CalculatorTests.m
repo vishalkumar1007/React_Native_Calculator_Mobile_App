@@ -7,11 +7,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React"
 
-@interface vishalCli_reactAppTests : XCTestCase
+@interface CalculatorTests : XCTestCase
 
 @end
 
-@implementation vishalCli_reactAppTests
+@implementation CalculatorTests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL (^)(UIView *view))test
 {

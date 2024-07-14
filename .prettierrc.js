@@ -1,5 +1,7 @@
-export const arrowParens = 'none';
-export const bracketSameLine = true;
-export const bracketSpacing = true;
-export const singleQuote = true;
-export const trailingComma = 'none';
+module.exports = {
+  arrowParens: 'avoid',
+  bracketSameLine: true,
+  bracketSpacing: false,
+  singleQuote: true,
+  trailingComma: 'all',
+};

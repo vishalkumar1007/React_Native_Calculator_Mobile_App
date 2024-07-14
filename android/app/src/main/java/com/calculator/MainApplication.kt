@@ -1,4 +1,4 @@
-package com.vishalcli_reactapp
+package com.calculator
 
 import android.app.Application
 import com.facebook.react.PackageList
