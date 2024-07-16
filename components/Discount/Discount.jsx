@@ -10,14 +10,14 @@ const Discount = ({ colorMode, openComponent, closeComponentProp }) => {
     // .....................
     const [userInputLog_1, setUserInputLog_1] = useState('');
     const [inputCalculatedValue_1, setInputCalculatedValue_1] = useState('');
-    const [drop1Value, setDrop1Value] = useState('Kilometer');
-    const [drop1ValueUnit, setDrop1ValueUnit] = useState('km');
+    const [drop1Value, setDrop1Value] = useState('Discounts');
+    const [drop1ValueUnit, setDrop1ValueUnit] = useState('Ds');
     const [drop1Close, setDrop1Close] = useState(false);
     const [Layout1leftWidth, setlayout1leftWidth] = useState(0);
     const [Layout1MainWidth, setlayout1MainWidth] = useState(0);
     // .....................
-    const [drop2Value , setDrop2Value] = useState('Kilometer')
-    const [drop2ValueUnit , setDrop2ValueUnit] = useState('km')
+    const [drop2Value , setDrop2Value] = useState('Discounts')
+    const [drop2ValueUnit , setDrop2ValueUnit] = useState('Ds')
     const [drop2Close, setDrop2Close] = useState(false);
     const [Layout2leftWidth, setlayout2leftWidth] = useState(0);
     const [Layout2MainWidth, setlayout2MainWidth] = useState(0);
@@ -111,8 +111,8 @@ const Discount = ({ colorMode, openComponent, closeComponentProp }) => {
         setlayout2MainWidth(width);
     }
 
-    const AreaData = [['Kilometer', 'km'], ['Meter', 'm'], ['Decimeter', 'dm'], ['Centimeter', 'cm'], ['Millimeter', 'mm'], ['Micrometer', 'μm'], ['Nanometer', 'nm'], ['Picometer', 'pm'], ['Nautrical mile', 'nmi'], ['Mile', 'mi'], ['Furlong', 'fur'], ['Fathom', 'ftm'], ['Yard', 'yd'], ['Foot', 'ft'], ['Inch', 'in'], ['Lunar distance', 'ld'], ['Astronomical unit', '☉'], ['Light year', 'ly']]
-    const Area2Data = [['Kilometer', 'km'], ['Meter', 'm'], ['Decimeter', 'dm'], ['Centimeter', 'cm'], ['Millimeter', 'mm'], ['Micrometer', 'μm'], ['Nanometer', 'nm'], ['Picometer', 'pm'], ['Nautrical mile', 'nmi'], ['Mile', 'mi'], ['Furlong', 'fur'], ['Fathom', 'ftm'], ['Yard', 'yd'], ['Foot', 'ft'], ['Inch', 'in'], ['Lunar distance', 'ld'], ['Astronomical unit', '☉'], ['Light year', 'ly']]
+    const AreaData = [['Discounts', 'Ds']]
+    const Area2Data = [['Discount', 'Ds']]
 
     return (
         <SafeAreaView style={[styles.main, { backgroundColor: colorMode === 'black' ? 'black' : '#f0f0f0' }]}>
