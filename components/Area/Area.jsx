@@ -1,41 +1,39 @@
+// import react from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, StatusBar, ScrollView, SafeAreaView, Modal, Pressable } from 'react-native';
-import { useState, useEffect, useReducer, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Inputs from '../Inputs/Inputs';
-import Svg, { Path} from 'react-native-svg';
+import Svg, { Path } from 'react-native-svg';
 
 const Area = ({ colorMode, openComponent, closeComponentProp }) => {
     const dropValue1Ref = useRef(null);
     const dropValue2Ref = useRef(null);
     const [closeComponent, setCloseComponent] = useState('0');
-    // .....................
-    const [drop1Value, setDrop1Value] = useState('Square kilometer');                 // operation 1
+    // .......................
+    const [drop1Value, setDrop1Value] = useState('Square kilometer'); // operation 1
     const [inputCalculatedValue_1, setInputCalculatedValue_1] = useState('0');  // value 1
     const [userInputLog_1, setUserInputLog_1] = useState('');
-    const [drop1ValueUnit, setDrop1ValueUnit] = useState('km^2');  
+    const [drop1ValueUnit, setDrop1ValueUnit] = useState('km^2');
     const [drop1Close, setDrop1Close] = useState(false);
     const [Layout1leftWidth, setlayout1leftWidth] = useState(0);
     const [Layout1MainWidth, setlayout1MainWidth] = useState(0);
-    // .....................
-    const [drop2Value , setDrop2Value] = useState('Square kilometer');                // operation 2
+    // ........................
+    const [drop2Value, setDrop2Value] = useState('Square kilometer');                // operation 2
     const [inputCalculatedValue_2, setInputCalculatedValue_2] = useState('0');  // value 2
-    const [drop2ValueUnit , setDrop2ValueUnit] = useState('km^2')
+    const [drop2ValueUnit, setDrop2ValueUnit] = useState('km^2')
     const [drop2Close, setDrop2Close] = useState(false);
     const [Layout2leftWidth, setlayout2leftWidth] = useState(0);
     const [Layout2MainWidth, setlayout2MainWidth] = useState(0);
     const [userInputLog_2, setUserInputLog_2] = useState('');
-    // ......................
-    const [isActive , setIsActive] = useState(true);
-    
+    // .........................
+    const [isActive, setIsActive] = useState(true);
+
     useEffect(() => {
         console.log('..................................AREA.......')
         console.log('operation 1 : ', drop1Value);
         console.log('value 1 : ', inputCalculatedValue_1);
         console.log('operation 2 : ', drop2Value);
         console.log('value 2 : ', inputCalculatedValue_2);
-    }, [drop1Value,inputCalculatedValue_1,drop2Value,inputCalculatedValue_2])
-
-
-
+    }, [drop1Value, inputCalculatedValue_1, drop2Value, inputCalculatedValue_2])
 
 
     useEffect(() => {
@@ -69,7 +67,7 @@ const Area = ({ colorMode, openComponent, closeComponentProp }) => {
         // console.log('Value : ', valueUnit);
         setDrop1Close(false);
     }
-    const SetAndCloseDrop2 = (value , valueUnit)=>{
+    const SetAndCloseDrop2 = (value, valueUnit) => {
         setDrop2Value(value);
         setDrop2ValueUnit(valueUnit)
         // console.log('Value : ', value);
@@ -117,7 +115,7 @@ const Area = ({ colorMode, openComponent, closeComponentProp }) => {
     const Area2Data = [['Square kilometer', 'km^2'], ['Hectare', 'he'], ['Are', 'a'], ['Square meter', 'm^2'], ['Square decimeter', 'dm^2'], ['Square centimeter', 'cm^2'], ['Square millimeter', 'mm^2'], ['Square micron', 'μm^2'], ['Acre', 'ac'], ['Square mile', 'mile^2'], ['Square yard', 'yd^2'], ['Square foot', 'ft^2'], ['Square inch', 'in^2'], ['Square rod', 'rd^2']]
 
 
-    
+
 
     return (
         <SafeAreaView style={[styles.main, { backgroundColor: colorMode === 'black' ? 'black' : '#f0f0f0' }]}>
@@ -153,15 +151,15 @@ const Area = ({ colorMode, openComponent, closeComponentProp }) => {
                         <View style={styles.areaInputTop}>
                             <View style={styles.dropDownParent} onLayout={onLayout1Main}>
                                 <View style={styles.dropDownMain} onLayout={onLayout1left}>
-                                    <Text style={[styles.dropDownText , {color:colorMode==='black'?'#c0c0c0':'#464646'}]}>{drop1Value}</Text>
-                                    <Text style={[styles.dropDownTextUnit ]}>{drop1ValueUnit}</Text>
-                                    <TouchableOpacity style={styles.dropDownOpen} onPress={() => { setDrop1Close(true) }}><Text style={[styles.dropDownOpenText, {color:colorMode==='black'?'#a9a9a9':'#4b4b4b'}]}>&#8597;</Text></TouchableOpacity>
+                                    <Text style={[styles.dropDownText, { color: colorMode === 'black' ? '#c0c0c0' : '#464646' }]}>{drop1Value}</Text>
+                                    <Text style={[styles.dropDownTextUnit]}>{drop1ValueUnit}</Text>
+                                    <TouchableOpacity style={styles.dropDownOpen} onPress={() => { setDrop1Close(true) }}><Text style={[styles.dropDownOpenText, { color: colorMode === 'black' ? '#a9a9a9' : '#4b4b4b' }]}>&#8597;</Text></TouchableOpacity>
                                 </View>
                                 <View style={[styles.input1main, { maxWidth: Layout1MainWidth - Layout1leftWidth }]}>
                                     <ScrollView ref={dropValue1Ref} contentContainerStyle={styles.input1scroll} horizontal={true} >
-                                        <Pressable style={styles.input1touch} onPress={()=>{setIsActive(true)}}>
+                                        <Pressable style={styles.input1touch} onPress={() => { setIsActive(true) }}>
                                             <View style={styles.InputSectionOneMain}>
-                                                <Text style={[styles.InputSectionOneMainInput , {color: isActive==true?'#ff9400':'gray'}]}>{inputCalculatedValue_1===''?'0':inputCalculatedValue_1}</Text>
+                                                <Text style={[styles.InputSectionOneMainInput, { color: isActive == true ? '#ff9400' : 'gray' }]}>{inputCalculatedValue_1 === '' ? '0' : inputCalculatedValue_1}</Text>
                                             </View>
                                         </Pressable>
                                     </ScrollView>
@@ -192,15 +190,15 @@ const Area = ({ colorMode, openComponent, closeComponentProp }) => {
                         <View style={styles.areaInputBottom}>
                             <View style={styles.dropDownParent} onLayout={onLayout2Main}>
                                 <View style={styles.dropDownMain} onLayout={onLayout2left}>
-                                    <Text style={[styles.dropDownText, {color:colorMode==='black'?'#c0c0c0':'#464646'}]}>{drop2Value}</Text>
+                                    <Text style={[styles.dropDownText, { color: colorMode === 'black' ? '#c0c0c0' : '#464646' }]}>{drop2Value}</Text>
                                     <Text style={styles.dropDownTextUnit}>{drop2ValueUnit}</Text>
-                                    <TouchableOpacity style={styles.dropDownOpen} onPress={() => { setDrop2Close(true) }}><Text style={[styles.dropDownOpenText , {color:colorMode==='black'?'#a9a9a9':'#4b4b4b'}]}>&#8597;</Text></TouchableOpacity>
+                                    <TouchableOpacity style={styles.dropDownOpen} onPress={() => { setDrop2Close(true) }}><Text style={[styles.dropDownOpenText, { color: colorMode === 'black' ? '#a9a9a9' : '#4b4b4b' }]}>&#8597;</Text></TouchableOpacity>
                                 </View>
                                 <View style={[styles.input1main, { maxWidth: Layout2MainWidth - Layout2leftWidth }]}>
                                     <ScrollView ref={dropValue2Ref} contentContainerStyle={styles.input1scroll} horizontal={true} >
-                                        <Pressable style={styles.input1touch} onPress={()=>{setIsActive(false)}}>
+                                        <Pressable style={styles.input1touch} onPress={() => { setIsActive(false) }}>
                                             <View style={styles.InputSectionOneMain}>
-                                                <Text style={[styles.InputSectionOneMainInput , {color: isActive==false?'#ff9400':'gray'}]}>{inputCalculatedValue_2===''?'0':inputCalculatedValue_2}</Text>
+                                                <Text style={[styles.InputSectionOneMainInput, { color: isActive == false ? '#ff9400' : 'gray' }]}>{inputCalculatedValue_2 === '' ? '0' : inputCalculatedValue_2}</Text>
                                             </View>
                                         </Pressable>
                                     </ScrollView>
@@ -234,11 +232,11 @@ const Area = ({ colorMode, openComponent, closeComponentProp }) => {
             </View>
             <View style={styles.areaBottom}>
                 {
-                    isActive?
-                    <Inputs  previousValue={inputCalculatedValue_1} colorMode={colorMode} UserInputLog={GetInput1Log} CalculatedLog={GetCalculated1Value} disableBtnNumber={['3']} />
-                    :
-                    <Inputs previousValue={inputCalculatedValue_2} colorMode={colorMode} UserInputLog={GetInput2Log} CalculatedLog={GetCalculated2Value} disableBtnNumber={['3']} />
-                    
+                    isActive ?
+                        <Inputs previousValue={inputCalculatedValue_1} colorMode={colorMode} UserInputLog={GetInput1Log} CalculatedLog={GetCalculated1Value} disableBtnNumber={['3']} />
+                        :
+                        <Inputs previousValue={inputCalculatedValue_2} colorMode={colorMode} UserInputLog={GetInput2Log} CalculatedLog={GetCalculated2Value} disableBtnNumber={['3']} />
+
                 }
             </View>
         </SafeAreaView>
@@ -394,11 +392,11 @@ const styles = StyleSheet.create({
         maxHeight: 350,
         padding: 2,
         borderRadius: 12,
-        overflow:'hidden',
-        elevation:10,
-        shadowColor:'black'
+        overflow: 'hidden',
+        elevation: 10,
+        shadowColor: 'black'
     },
-    topScrollDropDown2:{
+    topScrollDropDown2: {
         position: 'absolute',
         backgroundColor: '#202020',
         top: 200,
@@ -406,9 +404,9 @@ const styles = StyleSheet.create({
         maxHeight: 350,
         padding: 2,
         borderRadius: 12,
-        overflow:'hidden',
-        elevation:10,
-        shadowColor:'black'
+        overflow: 'hidden',
+        elevation: 10,
+        shadowColor: 'black'
     },
     topDroDownScrollView: {
         width: '100%',
